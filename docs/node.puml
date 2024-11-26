@@ -1,0 +1,57 @@
+@startuml
+class Attribute{
+    -name : String
+    -value : String
+    +Attribute(String name, String value)
+    +getName() : String
+    +getValue() : String
+}
+
+abstract class Node{
+    -attributes : List<Attribute>
+    +Node()
+    +Node(List<Attribute> attributes)
+    +getAttributes() : List<Attribute>
+}
+
+Node "*" -right-> "1"  Attribute : use
+
+class ObjectNode {
+    -properties : Map<String, Node>
+    +ObjectNode(Map<String, Node> properties)
+    +ObjectNode(Map<String, Node> properties, List<Attribute> attributes)
+    +getProperties() : Map<String, Node>
+}
+
+Node <|-up- ObjectNode
+
+class ArrayNode {
+    -items : List<Node>
+    +ArrayNode(List<Node> items)
+    +ArrayNode(List<Node> items, List<Attribute> attributes)
+    +getItems() : List<Node>
+}
+
+Node <|-up- ArrayNode
+
+ class StringNode extends Node{
+     -value : String
+     +StringNode(String value)
+     +StringNode(String value, List<Attribute> attributes)
+     +getValue() : String
+ }
+
+ class NumberNode extends Node{
+     -value : BigDecimal
+     +NumberNode(BigDecimal value)
+     +NumberNode(BigDecimal value, List<Attribute> attributes)
+     +getValue() : BigDecimal
+ }
+
+ class BooleanNode extends Node{
+     -value : boolean
+     +BooleanNode(boolean value)
+     +BooleanNode(boolean value, List<Attribute> attributes)
+     +getValue() : boolean
+ }
+@enduml
