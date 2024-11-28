@@ -6,11 +6,8 @@ import java.util.Objects;
 public abstract class Node {
     private final List<Attribute> attributes;
 
-//    public Node() {
-//    }
-
     public Node() {
-        this.attributes = null;
+        this.attributes = List.of();
     }
 
     public Node(List<Attribute> attributes) {
@@ -32,12 +29,5 @@ public abstract class Node {
     @Override
     public int hashCode() {
         return Objects.hashCode(attributes);
-    }
-
-    @Override
-    public String toString() {
-        return "Node{" +
-            "attributes=" + attributes +
-            '}';
     }
 }

@@ -110,10 +110,10 @@
                         <mutator>ALL</mutator>
                     </mutators>
                     <targetClasses>
-                        <param>org.example.demo.*</param>
+                        <param>org.example.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>org.example.demo.*</param>
+                        <param>org.example.*</param>
                     </targetTests>
                 </configuration>
             </plugin>
