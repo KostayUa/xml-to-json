@@ -22,21 +22,29 @@ public class StringNode extends Node {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
         StringNode that = (StringNode) o;
-        return Objects.equals(value, that.value);
+        if (!Objects.equals(value, that.value)) return false;
+        return super.equals(o);
     }
 
-    @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), value);
+        return super.hashCode(value);
     }
+
+//    @Override
+//    public String toString() {
+//        return "StringNode{" +
+//            "value='" + value + '\'' +
+//            '}';
+//    }
 
     @Override
     public String toString() {
         return "StringNode{" +
-            "value='" + value + '\'' +
+            "value='" + value + '\'' + ", " +
+            "attributes=" + getAttributes() +
             '}';
     }
 }

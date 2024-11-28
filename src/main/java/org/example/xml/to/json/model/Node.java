@@ -30,4 +30,8 @@ public abstract class Node {
     public int hashCode() {
         return Objects.hashCode(attributes);
     }
+
+    public int hashCode(Object o) {
+        return Objects.hash(o, attributes);
+    }
 }
