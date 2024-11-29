@@ -18,17 +18,21 @@ public abstract class Node {
         return attributes;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        return Objects.equals(attributes, node.attributes);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Node node = (Node) o;
+//        return Objects.equals(attributes, node.attributes);
+//    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(attributes);
+//    @Override
+//    public int hashCode() {
+//        return Objects.hashCode(attributes);
+//    }
+
+    public boolean equals2(Node node) {
+        return Objects.equals(attributes, node.attributes);
     }
 
     public int hashCode(Object o) {

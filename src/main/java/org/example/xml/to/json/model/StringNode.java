@@ -26,25 +26,58 @@ public class StringNode extends Node {
         if (getClass() != o.getClass()) return false;
         StringNode that = (StringNode) o;
         if (!Objects.equals(value, that.value)) return false;
-        return super.equals(o);
+        return super.equals2(that);
     }
 
     public int hashCode() {
         return super.hashCode(value);
     }
 
-//    @Override
-//    public String toString() {
-//        return "StringNode{" +
-//            "value='" + value + '\'' +
-//            '}';
-//    }
-
     @Override
     public String toString() {
-        return "StringNode{" +
-            "value='" + value + '\'' + ", " +
-            "attributes=" + getAttributes() +
-            '}';
+        List<Attribute> attributes = getAttributes();
+        String attrs;
+        if (attributes.isEmpty()) {
+            attrs = "";
+        } else {
+            attrs = ", attributes=" + attributes;
+        }
+        return "StringNode(value='" + getValue() + '\'' + attrs + ")";
     }
+
+    public String toString2() {
+        List<Attribute> attributes = getAttributes();
+        String attrs;
+        if (attributes.isEmpty()) {
+            attrs = "";
+        } else {
+            attrs = ", attributes=" + attributes;
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append("StringNode(value='");
+        builder.append(getValue());
+        builder.append('\'');
+        builder.append(attrs);
+        builder.append(")");
+        return builder.toString();
+    }
+
+//    public String toString2() {
+//        List<Attribute> attributes = getAttributes();
+//        String attrs;
+//        StringBuilder builder = new StringBuilder();
+//        builder.append("StringNode(value='");
+//        builder.append(getValue());
+//        builder.append('\'');
+//        if (attributes.isEmpty()) {
+//            attrs = "";
+//            builder.append(attrs);
+//        } else {
+//            attrs = ", attributes=";
+//            builder.append(attrs);
+//            builder.append(attributes);
+//        }
+//        builder.append(")");
+//        return builder.toString();
+//    }
 }

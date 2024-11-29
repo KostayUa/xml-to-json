@@ -34,9 +34,9 @@ public class Attribute {
 
     @Override
     public String toString() {
-        return "Attribute{" +
-            "name='" + name + '\'' +
-            ", value='" + value + '\'' +
-            '}';
+        return "Attribute(" +
+            "name='" + getName() + '\'' +
+            ", value='" + getValue() + '\'' +
+            ")";
     }
 }

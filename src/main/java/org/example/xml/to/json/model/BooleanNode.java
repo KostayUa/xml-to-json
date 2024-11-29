@@ -23,20 +23,25 @@ public class BooleanNode extends Node {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         BooleanNode that = (BooleanNode) o;
-        return value == that.value;
+        if (!Objects.equals(value, that.value)) return false;
+        return super.equals2(that);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), value);
+        return super.hashCode(value);
     }
 
     @Override
     public String toString() {
-        return "BooleanNode{" +
-            "value=" + value +
-            '}';
+        List<Attribute> attributes = getAttributes();
+        String attrs;
+        if (attributes.isEmpty()) {
+            attrs = "";
+        } else {
+            attrs = ", attributes=" + attributes;
+        }
+        return "BooleanNode(value='" + getValue() + '\'' + attrs + ")";
     }
 }

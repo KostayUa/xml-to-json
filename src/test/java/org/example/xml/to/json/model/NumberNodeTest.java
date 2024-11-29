@@ -168,14 +168,14 @@ public class NumberNodeTest {
         @Test
         public void StringNodeToString() {
             Node node = createNode(VAL1);
-            String expected = "NumberNode{value='1', attributes=[]}";
+            String expected = "NumberNode(value='1')";
             assertEquals(expected, node.toString());
         }
 
         @Test
         public void StringNodeToStingWithAttributes() {
             Node node = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
-            String expected = "NumberNode{value='1', attributes=[Attribute{name='key1', value='value1'}]}";
+            String expected = "NumberNode(value='1', attributes=[Attribute(name='key1', value='value1')])";
             assertEquals(expected, node.toString());
 
         }

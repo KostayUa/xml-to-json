@@ -6,17 +6,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StringNodeTest {
+public class BooleanNodeTest {
 
     @Nested
     class EqualsToNull {
-        Node node = createNode(VALUE1);
+        Node node = createNode(VAL1);
 
         @Test
         public void nodeIsNotEqualsToNull() {
@@ -26,7 +25,7 @@ public class StringNodeTest {
 
     @Nested
     class Reflexivity {
-        Node node = createNode(VALUE1);
+        Node node = createNode(VAL1);
 
         @Test
         public void nodeIsEqualItSelf() {
@@ -46,8 +45,8 @@ public class StringNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(VALUE1);
-            Node node2 = createNode(VALUE1);
+            Node node1 = createNode(VAL1);
+            Node node2 = createNode(VAL1);
 
             @Test
             public void nodesAreSymmetric() {
@@ -63,8 +62,8 @@ public class StringNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node2 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
 
             @Test
             public void nodesAreSymmetric() {
@@ -84,9 +83,9 @@ public class StringNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(VALUE1);
-            Node node2 = createNode(VALUE1);
-            Node node3 = createNode(VALUE1);
+            Node node1 = createNode(VAL1);
+            Node node2 = createNode(VAL1);
+            Node node3 = createNode(VAL1);
 
             @Test
             public void nodesAreTransitivity() {
@@ -104,9 +103,9 @@ public class StringNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
-            Node node3 = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node2 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node3 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
 
             @Test
             public void nodesAreTransitivity() {
@@ -135,12 +134,12 @@ public class StringNodeTest {
 
         private static Stream<Arguments> sourceForNodesAreNotEquals() {
             return Stream.of(
-                Arguments.of(createNode(VALUE1), createNode(VALUE2)),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE1)),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE1, List.of(new Attribute(KEY2, VALUE1)))),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE1, List.of(new Attribute(KEY1, VALUE2)))),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE1, List.of(new Attribute(KEY2, VALUE2)))),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE2, List.of(new Attribute(KEY1, VALUE1))))
+                Arguments.of(createNode(VAL1), createNode(VAL2)),
+                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1)),
+                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY2, VALUE1)))),
+                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY1, VALUE2)))),
+                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY2, VALUE2)))),
+                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL2, List.of(new Attribute(KEY1, VALUE1))))
             );
         }
 
@@ -150,15 +149,15 @@ public class StringNodeTest {
     class NodeWithDifferentClass {
         @Test
         public void differentClassWithoutAttributes() {
-            Node node1 = createNode(VALUE1);
-            Node node2 = new NumberNode(new BigDecimal(1));
+            Node node1 = createNode(VAL1);
+            Node node2 = new StringNode(VALUE1);
             assertFalse(node1.equals(node2));
         }
 
         @Test
         public void differentClassWithAttributes() {
-            Node node1 = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = new NumberNode(new BigDecimal(1), List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node2 = new StringNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
             assertFalse(node1.equals(node2));
         }
     }
@@ -167,44 +166,25 @@ public class StringNodeTest {
     class ToStringTest {
         @Test
         public void StringNodeToString() {
-            Node node = createNode(VALUE1);
-            String expected = "StringNode(value='value1')";
+            Node node = createNode(VAL2);
+            String expected = "BooleanNode(value='false')";
             assertEquals(expected, node.toString());
         }
 
         @Test
         public void StringNodeToStingWithAttributes() {
-            Node node = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
-            String expected = "StringNode(value='value1', attributes=[Attribute(name='key1', value='value1')])";
+            Node node = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            String expected = "BooleanNode(value='true', attributes=[Attribute(name='key1', value='value1')])";
             assertEquals(expected, node.toString());
-
         }
     }
 
-    @Nested
-    class ToStringTest2 {
-        @Test
-        public void StringNodeToString() {
-            Node node = createNode(VALUE1);
-            String expected = "StringNode(value='value1')";
-            assertEquals(expected, ((StringNode) node).toString2());
-        }
-
-        @Test
-        public void StringNodeToStingWithAttributes() {
-            Node node = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
-            String expected = "StringNode(value='value1', attributes=[Attribute(name='key1', value='value1')])";
-            assertEquals(expected, ((StringNode) node).toString2());
-
-        }
+    private static Node createNode(boolean value) {
+        return new BooleanNode(value);
     }
 
-    private static Node createNode(String value) {
-        return new StringNode(value);
-    }
-
-    private static Node createNode(String value, List<Attribute> attributes) {
-        return new StringNode(value, attributes);
+    private static Node createNode(boolean value, List<Attribute> attributes) {
+        return new BooleanNode(value, attributes);
     }
 
     private static final String KEY1 = "key1";
@@ -212,4 +192,7 @@ public class StringNodeTest {
 
     private static final String VALUE1 = "value1";
     private static final String VALUE2 = "value2";
+
+    private static final boolean VAL1 = true;
+    private static final boolean VAL2 = false;
 }

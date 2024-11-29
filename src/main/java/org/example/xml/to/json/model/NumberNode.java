@@ -26,7 +26,7 @@ public class NumberNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         NumberNode that = (NumberNode) o;
         if (!Objects.equals(value, that.value)) return false;
-        return super.equals(o);
+        return super.equals2(that);
     }
 
     @Override
@@ -36,9 +36,13 @@ public class NumberNode extends Node {
 
     @Override
     public String toString() {
-        return "NumberNode{" +
-            "value='" + getValue() + '\'' + ", " +
-            "attributes=" + getAttributes() +
-            '}';
+        List<Attribute> attributes = getAttributes();
+        String attrs;
+        if (attributes.isEmpty()) {
+            attrs = "";
+        } else {
+            attrs = ", attributes=" + attributes;
+        }
+        return "NumberNode(value='" + getValue() + '\'' + attrs + ")";
     }
 }
