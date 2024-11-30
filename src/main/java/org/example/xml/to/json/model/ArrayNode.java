@@ -23,21 +23,25 @@ public class ArrayNode extends Node {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         ArrayNode arrayNode = (ArrayNode) o;
-        return Objects.equals(items, arrayNode.items);
+        if (!Objects.equals(items, arrayNode.items)) return false;
+        return super.equals2(arrayNode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), items);
+        return super.hashCode(items);
     }
 
-    //    @Override
-//    public int hashCode() {
-//        int result = 17;
-//        result = 31 * result + (super.hashCode());
-//        result = 31 * result + (items != null ? items.hashCode() : 0);
-//        return result;
-//    }
+    @Override
+    public String toString() {
+        List<Attribute> attributes = getAttributes();
+        String attrs;
+        if (attributes.isEmpty()) {
+            attrs = "";
+        } else {
+            attrs = ", attributes=" + attributes;
+        }
+        return "ArrayNode(items=" + getItems() + attrs + ")";
+    }
 }

@@ -165,14 +165,14 @@ public class BooleanNodeTest {
     @Nested
     class ToStringTest {
         @Test
-        public void StringNodeToString() {
+        public void BooleanNodeToString() {
             Node node = createNode(VAL2);
             String expected = "BooleanNode(value='false')";
             assertEquals(expected, node.toString());
         }
 
         @Test
-        public void StringNodeToStingWithAttributes() {
+        public void BooleanNodeToStingWithAttributes() {
             Node node = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
             String expected = "BooleanNode(value='true', attributes=[Attribute(name='key1', value='value1')])";
             assertEquals(expected, node.toString());
