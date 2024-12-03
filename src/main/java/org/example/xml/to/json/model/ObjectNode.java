@@ -24,20 +24,25 @@ public class ObjectNode extends Node {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         ObjectNode that = (ObjectNode) o;
-        return Objects.equals(properties, that.properties);
+        if (!Objects.equals(properties, that.properties)) return false;
+        return super.equals2(that);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), properties);
+        return super.hashCode(properties);
     }
 
     @Override
     public String toString() {
-        return "ObjectNode{" +
-            "properties=" + properties +
-            '}';
+        List<Attribute> attributes = getAttributes();
+        String attrs;
+        if (attributes.isEmpty()) {
+            attrs = "";
+        } else {
+            attrs = ", attributes=" + attributes;
+        }
+        return "ObjectNode(properties=" + getProperties() + attrs + ")";
     }
 }
