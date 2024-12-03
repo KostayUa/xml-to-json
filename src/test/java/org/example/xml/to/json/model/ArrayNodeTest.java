@@ -16,8 +16,7 @@ public class ArrayNodeTest {
 
     @Nested
     class EqualsToNull {
-
-        Node node = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)));
+        Node node = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)));
 
         @Test
         public void nodeIsNotEqualsToNull() {
@@ -28,18 +27,41 @@ public class ArrayNodeTest {
     @Nested
     class Reflexivity {
 
-        Node node = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)));
+        @Nested
+        class WithoutAttributes {
+            Node node = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)));
 
-        @Test
-        public void nodeEqualsToItself() {
-            assertTrue(node.equals(node));
+            @Test
+            public void nodeEqualsToItself() {
+                assertTrue(node.equals(node));
+            }
+
+            @Test
+            public void hashCodeIsConsistent() {
+                int hash1 = node.hashCode();
+                int hash2 = node.hashCode();
+                assertEquals(hash1, hash2);
+            }
         }
 
-        @Test
-        public void hashCodeIsConsistent() {
-            int hash1 = node.hashCode();
-            int hash2 = node.hashCode();
-            assertEquals(hash1, hash2);
+        @Nested
+        class WithAttributes {
+            Node node = createNode(
+                List.of(new StringNode(VALUE1), new StringNode(VALUE2)),
+                List.of(new Attribute(KEY1, VALUE1))
+            );
+
+            @Test
+            public void nodeEqualsToItself() {
+                assertTrue(node.equals(node));
+            }
+
+            @Test
+            public void hashCodeIsConsistent() {
+                int hash1 = node.hashCode();
+                int hash2 = node.hashCode();
+                assertEquals(hash1, hash2);
+            }
         }
     }
 
@@ -65,8 +87,14 @@ public class ArrayNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(
+                List.of(new StringNode(VALUE1), new StringNode(VALUE2)),
+                List.of(new Attribute(KEY1, VALUE1))
+            );
+            Node node2 = createNode(
+                List.of(new StringNode(VALUE1), new StringNode(VALUE2)),
+                List.of(new Attribute(KEY1, VALUE1))
+            );
 
             @Test
             public void nodesAreSymmetric() {
@@ -86,9 +114,9 @@ public class ArrayNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(List.of(new NumberNode(VALUE4), new NumberNode(VALUE5)));
-            Node node2 = createNode(List.of(new NumberNode(VALUE4), new NumberNode(VALUE5)));
-            Node node3 = createNode(List.of(new NumberNode(VALUE4), new NumberNode(VALUE5)));
+            Node node1 = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)));
+            Node node2 = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)));
+            Node node3 = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)));
 
             @Test
             public void nodeAreTransitivity() {
@@ -107,9 +135,18 @@ public class ArrayNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(List.of(new NumberNode(VALUE4), new NumberNode(VALUE5)), List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = createNode(List.of(new NumberNode(VALUE4), new NumberNode(VALUE5)), List.of(new Attribute(KEY1, VALUE1)));
-            Node node3 = createNode(List.of(new NumberNode(VALUE4), new NumberNode(VALUE5)), List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(
+                List.of(new StringNode(VALUE1), new StringNode(VALUE2)),
+                List.of(new Attribute(KEY1, VALUE1))
+            );
+            Node node2 = createNode(
+                List.of(new StringNode(VALUE1), new StringNode(VALUE2)),
+                List.of(new Attribute(KEY1, VALUE1))
+            );
+            Node node3 = createNode(
+                List.of(new StringNode(VALUE1), new StringNode(VALUE2)),
+                List.of(new Attribute(KEY1, VALUE1))
+            );
 
             @Test
             public void nodeAreTransitivity() {
@@ -139,18 +176,34 @@ public class ArrayNodeTest {
 
         private static Stream<Arguments> sourceForNodeAreNotEquals() {
             return Stream.of(
-                Arguments.of(createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2))),
-                    createNode(List.of(new StringNode(VALUE1)))),
-                Arguments.of(createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(List.of(new StringNode(VALUE1)))),
-                Arguments.of(createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY2, VALUE1)))),
-                Arguments.of(createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE2)))),
-                Arguments.of(createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY2, VALUE2)))),
-                Arguments.of(createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(List.of(new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1))))
+                Arguments.of(
+                    createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2))),
+                    createNode(List.of(new StringNode(VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(List.of(new StringNode(VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(List.of(new StringNode(VALUE1))),
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY2, VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY2, VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(List.of(new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(List.of(new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)))
+                )
             );
         }
     }
@@ -160,7 +213,7 @@ public class ArrayNodeTest {
         @Test
         public void differentClassWithoutAttributes() {
             Node node1 = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE1)));
-            Node node2 = new NumberNode(VALUE5);
+            Node node2 = new NumberNode(VALUE3);
             assertFalse(node1.equals(node2));
         }
 
@@ -168,8 +221,7 @@ public class ArrayNodeTest {
         public void differentClassWithAttributes() {
             Node node1 = createNode(List.of(new StringNode(VALUE1),
                 new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = new NumberNode(VALUE5, List.of(new Attribute(KEY1, VALUE1)));
-
+            Node node2 = new NumberNode(VALUE3, List.of(new Attribute(KEY1, VALUE1)));
             assertFalse(node1.equals(node2));
         }
     }
@@ -180,15 +232,14 @@ public class ArrayNodeTest {
         public void ArrayNodeToString() {
             Node node = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)));
             String expected = "ArrayNode(items=[StringNode(value='value1'), StringNode(value='value2')])";
-
             assertEquals(expected, node.toString());
         }
 
         @Test
         public void ArrayNodeToStringWithAttributes() {
             Node node = createNode(List.of(new StringNode(VALUE1), new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)));
-            String expected = "ArrayNode(items=[StringNode(value='value1'), StringNode(value='value2')], attributes=[Attribute(name='key1', value='value1')])";
-
+            String expected = "ArrayNode(items=[StringNode(value='value1'), StringNode(value='value2')], " +
+                "attributes=[Attribute(name='key1', value='value1')])";
             assertEquals(expected, node.toString());
         }
     }
@@ -207,6 +258,5 @@ public class ArrayNodeTest {
     private static final String VALUE1 = "value1";
     private static final String VALUE2 = "value2";
 
-    private static final BigDecimal VALUE4 = new BigDecimal(1);
-    private static final BigDecimal VALUE5 = new BigDecimal(2);
+    private static final BigDecimal VALUE3 = new BigDecimal(1);
 }

@@ -135,14 +135,30 @@ public class BooleanNodeTest {
         private static Stream<Arguments> sourceForNodesAreNotEquals() {
             return Stream.of(
                 Arguments.of(createNode(VAL1), createNode(VAL2)),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1)),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY2, VALUE1)))),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY1, VALUE2)))),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY2, VALUE2)))),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL2, List.of(new Attribute(KEY1, VALUE1))))
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1)
+                ),
+                Arguments.of(
+                    createNode(VAL1), createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VAL1, List.of(new Attribute(KEY2, VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VAL1, List.of(new Attribute(KEY2, VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VAL2, List.of(new Attribute(KEY1, VALUE1)))
+                )
             );
         }
-
     }
 
     @Nested

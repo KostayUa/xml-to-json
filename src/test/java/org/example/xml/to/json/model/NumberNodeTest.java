@@ -26,18 +26,39 @@ public class NumberNodeTest {
 
     @Nested
     class Reflexivity {
-        Node node = createNode(VAL1);
 
-        @Test
-        public void nodeIsEqualItSelf() {
-            assertTrue(node.equals(node));
+        @Nested
+        class WithoutAttributes {
+            Node node = createNode(VAL1);
+
+            @Test
+            public void nodeIsEqualItSelf() {
+                assertTrue(node.equals(node));
+            }
+
+            @Test
+            public void hashCodeAlwaysTheSame() {
+                int hash1 = node.hashCode();
+                int hash2 = node.hashCode();
+                assertEquals(hash1, hash2);
+            }
         }
 
-        @Test
-        public void hashCodeAlwaysTheSame() {
-            int hash1 = node.hashCode();
-            int hash2 = node.hashCode();
-            assertEquals(hash1, hash2);
+        @Nested
+        class WithAttributes {
+            Node node = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+
+            @Test
+            public void nodeIsEqualItSelf() {
+                assertTrue(node.equals(node));
+            }
+
+            @Test
+            public void hashCodeAlwaysTheSame() {
+                int hash1 = node.hashCode();
+                int hash2 = node.hashCode();
+                assertEquals(hash1, hash2);
+            }
         }
     }
 
@@ -136,14 +157,30 @@ public class NumberNodeTest {
         private static Stream<Arguments> sourceForNodesAreNotEquals() {
             return Stream.of(
                 Arguments.of(createNode(VAL1), createNode(VAL2)),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1)),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY2, VALUE1)))),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY1, VALUE2)))),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1, List.of(new Attribute(KEY2, VALUE2)))),
-                Arguments.of(createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL2, List.of(new Attribute(KEY1, VALUE1))))
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1)
+                ),
+                Arguments.of(
+                    createNode(VAL1), createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VAL1, List.of(new Attribute(KEY2, VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VAL1, List.of(new Attribute(KEY2, VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VAL2, List.of(new Attribute(KEY1, VALUE1)))
+                )
             );
         }
-
     }
 
     @Nested
@@ -177,7 +214,6 @@ public class NumberNodeTest {
             Node node = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
             String expected = "NumberNode(value='1', attributes=[Attribute(name='key1', value='value1')])";
             assertEquals(expected, node.toString());
-
         }
     }
 
