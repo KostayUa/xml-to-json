@@ -46,38 +46,24 @@ public class StringNode extends Node {
     }
 
     public String toString2() {
-        List<Attribute> attributes = getAttributes();
-        String attrs;
-        if (attributes.isEmpty()) {
-            attrs = "";
-        } else {
-            attrs = ", attributes=" + attributes;
-        }
-        StringBuilder builder = new StringBuilder();
-        builder.append("StringNode(value='");
-        builder.append(getValue());
-        builder.append('\'');
-        builder.append(attrs);
+        StringBuilder builder = new StringBuilder("StringNode(");
+        appendValue(builder);
+        appendAttributes(builder);
         builder.append(")");
         return builder.toString();
     }
 
-//    public String toString2() {
-//        List<Attribute> attributes = getAttributes();
-//        String attrs;
-//        StringBuilder builder = new StringBuilder();
-//        builder.append("StringNode(value='");
-//        builder.append(getValue());
-//        builder.append('\'');
-//        if (attributes.isEmpty()) {
-//            attrs = "";
-//            builder.append(attrs);
-//        } else {
-//            attrs = ", attributes=";
-//            builder.append(attrs);
-//            builder.append(attributes);
-//        }
-//        builder.append(")");
-//        return builder.toString();
-//    }
+    private void appendValue(StringBuilder builder) {
+        builder.append("value='");
+        builder.append(getValue());
+        builder.append("'");
+    }
+
+    private void appendAttributes(StringBuilder builder) {
+        List<Attribute> attributes = getAttributes();
+        if (!attributes.isEmpty()) {
+            builder.append(", attributes=");
+            builder.append(attributes);
+        }
+    }
 }

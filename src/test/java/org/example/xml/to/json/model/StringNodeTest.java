@@ -26,18 +26,39 @@ public class StringNodeTest {
 
     @Nested
     class Reflexivity {
-        Node node = createNode(VALUE1);
 
-        @Test
-        public void nodeIsEqualItSelf() {
-            assertTrue(node.equals(node));
+        @Nested
+        class WithoutAttributes {
+            Node node = createNode(VALUE1);
+
+            @Test
+            public void nodeIsEqualItSelf() {
+                assertTrue(node.equals(node));
+            }
+
+            @Test
+            public void hashCodeAlwaysTheSame() {
+                int hash1 = node.hashCode();
+                int hash2 = node.hashCode();
+                assertEquals(hash1, hash2);
+            }
         }
 
-        @Test
-        public void hashCodeAlwaysTheSame() {
-            int hash1 = node.hashCode();
-            int hash2 = node.hashCode();
-            assertEquals(hash1, hash2);
+        @Nested
+        class WithAttributes {
+            Node node = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
+
+            @Test
+            public void nodeIsEqualItSelf() {
+                assertTrue(node.equals(node));
+            }
+
+            @Test
+            public void hashCodeAlwaysTheSame() {
+                int hash1 = node.hashCode();
+                int hash2 = node.hashCode();
+                assertEquals(hash1, hash2);
+            }
         }
     }
 
@@ -99,6 +120,7 @@ public class StringNodeTest {
             public void hashCodeIsEquals() {
                 assertEquals(node1.hashCode(), node2.hashCode());
                 assertEquals(node2.hashCode(), node3.hashCode());
+                assertEquals(node1.hashCode(), node3.hashCode());
             }
         }
 
@@ -119,6 +141,7 @@ public class StringNodeTest {
             public void hashCodeIsEquals() {
                 assertEquals(node1.hashCode(), node2.hashCode());
                 assertEquals(node2.hashCode(), node3.hashCode());
+                assertEquals(node1.hashCode(), node3.hashCode());
             }
         }
     }
@@ -137,13 +160,25 @@ public class StringNodeTest {
             return Stream.of(
                 Arguments.of(createNode(VALUE1), createNode(VALUE2)),
                 Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE1)),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE1, List.of(new Attribute(KEY2, VALUE1)))),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE1, List.of(new Attribute(KEY1, VALUE2)))),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE1, List.of(new Attribute(KEY2, VALUE2)))),
-                Arguments.of(createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))), createNode(VALUE2, List.of(new Attribute(KEY1, VALUE1))))
+                Arguments.of(createNode(VALUE1), createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)))),
+                Arguments.of(
+                    createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VALUE1, List.of(new Attribute(KEY2, VALUE1)))
+                ),
+                Arguments.of(
+                    createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VALUE1, List.of(new Attribute(KEY1, VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VALUE1, List.of(new Attribute(KEY2, VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(VALUE2, List.of(new Attribute(KEY1, VALUE1)))
+                )
             );
         }
-
     }
 
     @Nested
@@ -177,7 +212,6 @@ public class StringNodeTest {
             Node node = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
             String expected = "StringNode(value='value1', attributes=[Attribute(name='key1', value='value1')])";
             assertEquals(expected, node.toString());
-
         }
     }
 
@@ -195,7 +229,6 @@ public class StringNodeTest {
             Node node = createNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
             String expected = "StringNode(value='value1', attributes=[Attribute(name='key1', value='value1')])";
             assertEquals(expected, ((StringNode) node).toString2());
-
         }
     }
 
