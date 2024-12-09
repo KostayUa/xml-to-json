@@ -206,10 +206,10 @@ public class BooleanNodeTest {
         return new BooleanNode(name, value, attributes);
     }
 
-    private static final String ATTRIBUTE_NAME1 = "key1";
-    private static final String ATTRIBUTE_NAME2 = "key2";
-    private static final String ATTRIBUTE_VALUE1 = "value1";
-    private static final String ATTRIBUTE_VALUE2 = "value2";
+    private static final String ATTRIBUTE_NAME1 = "attribute_name1";
+    private static final String ATTRIBUTE_NAME2 = "attribute_name2";
+    private static final String ATTRIBUTE_VALUE1 = "attribute_value1";
+    private static final String ATTRIBUTE_VALUE2 = "attribute_value2";
     private static final boolean VALUE1 = true;
     private static final boolean VALUE2 = false;
     private static final String NODE_NAME1 = "name1";
