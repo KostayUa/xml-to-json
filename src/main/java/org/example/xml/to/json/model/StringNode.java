@@ -6,13 +6,13 @@ import java.util.Objects;
 public class StringNode extends Node {
     private final String value;
 
-    public StringNode(String nodeName, String value) {
-        super(nodeName);
+    public StringNode(String name, String value) {
+        super(name);
         this.value = value;
     }
 
-    public StringNode(String nodeName, String value, List<Attribute> attributes) {
-        super(nodeName, attributes);
+    public StringNode(String name, String value, List<Attribute> attributes) {
+        super(name, attributes);
         this.value = value;
     }
 
