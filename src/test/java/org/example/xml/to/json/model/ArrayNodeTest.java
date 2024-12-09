@@ -277,6 +277,20 @@ public class ArrayNodeTest {
         }
     }
 
+    @Nested
+    class requireNotNullTest {
+
+        @Test
+        public void nameIsNull() {
+            assertThrows(NullPointerException.class, () -> createNode(null, List.of(new StringNode(NODE_NAME1, STRING_VALUE1))));
+        }
+
+        @Test
+        public void valueIsNull() {
+            assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), null));
+        }
+    }
+
     private static Node createNode(String name, List<Node> items) {
         return new ArrayNode(name, items);
     }
