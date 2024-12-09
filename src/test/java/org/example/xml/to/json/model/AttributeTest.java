@@ -106,7 +106,7 @@ public class AttributeTest {
         @Test
         public void differentClassWithoutAttributes() {
             Attribute attribute1 = createAttribute(NAME1, VALUE1);
-            Node node2 = new StringNode(NODE_NAME1, VALUE1);
+            Node node2 = new StringNode(NODE_NAME1, STRING_VALUE);
             assertFalse(attribute1.equals(node2));
         }
     }
@@ -130,4 +130,5 @@ public class AttributeTest {
     private static final String NODE_NAME1 = "nodeName1";
     private static final String VALUE1 = "value1";
     private static final String VALUE2 = "value2";
+    private static final String STRING_VALUE = "value";
 }
