@@ -43,7 +43,7 @@ public class BooleanNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "BooleanNode(name='" + getNodeName() + '\''
+        return "BooleanNode(name='" + getName() + '\''
             + ", value='" + getValue() + '\'' + attrs + ")";
     }
 }

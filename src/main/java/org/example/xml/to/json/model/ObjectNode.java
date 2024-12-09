@@ -1,8 +1,6 @@
 package org.example.xml.to.json.model;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class ObjectNode extends Node {
@@ -45,7 +43,7 @@ public class ObjectNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "ObjectNode(name='" + getNodeName() + '\''
+        return "ObjectNode(name='" + getName() + '\''
             + ", properties=" + getProperties() + attrs + ")";
     }
 }

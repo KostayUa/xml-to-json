@@ -43,7 +43,7 @@ public class ArrayNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "ArrayNode(name='" + getNodeName() + '\''
+        return "ArrayNode(name='" + getName() + '\''
             + ", items=" + getItems() + attrs + ")";
     }
 }

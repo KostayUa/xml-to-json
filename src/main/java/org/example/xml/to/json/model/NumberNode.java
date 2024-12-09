@@ -44,7 +44,7 @@ public class NumberNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "NumberNode(name='" + getNodeName() + '\''
+        return "NumberNode(name='" + getName() + '\''
             + ", value='" + getValue() + '\'' + attrs + ")";
     }
 }

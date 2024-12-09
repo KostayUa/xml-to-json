@@ -43,7 +43,7 @@ public class StringNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "StringNode(name='" + getNodeName()
+        return "StringNode(name='" + getName()
             + "', value='" + getValue() + '\'' + attrs + ")";
     }
 
@@ -58,7 +58,7 @@ public class StringNode extends Node {
 
     private void appendName(StringBuilder builder) {
         builder.append("name='");
-        builder.append(getNodeName());
+        builder.append(getName());
         builder.append("'");
     }
 
