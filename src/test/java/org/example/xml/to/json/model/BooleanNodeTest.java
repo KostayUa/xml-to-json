@@ -198,6 +198,20 @@ public class BooleanNodeTest {
         }
     }
 
+    @Nested
+    class requireNotNullTest {
+
+        @Test
+        public void nameIsNull() {
+            assertThrows(NullPointerException.class, () -> createNode(null, VALUE1));
+        }
+
+        @Test
+        public void valueIsNull() {
+            assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, VALUE1, null));
+        }
+    }
+
     private static Node createNode(String name, boolean value) {
         return new BooleanNode(name, value);
     }
