@@ -7,13 +7,13 @@ import java.util.Objects;
 public class NumberNode extends Node {
     private final BigDecimal value;
 
-    public NumberNode(String nodeName, BigDecimal value) {
-        super(nodeName);
+    public NumberNode(String name, BigDecimal value) {
+        super(name);
         this.value = value;
     }
 
-    public NumberNode(String nodeName, BigDecimal value, List<Attribute> attributes) {
-        super(nodeName, attributes);
+    public NumberNode(String name, BigDecimal value, List<Attribute> attributes) {
+        super(name, attributes);
         this.value = value;
     }
 
