@@ -6,13 +6,13 @@ import java.util.Objects;
 public class ObjectNode extends Node {
     private final List<Node> properties;
 
-    public ObjectNode(String nodeName, List<Node> properties) {
-        super(nodeName);
+    public ObjectNode(String name, List<Node> properties) {
+        super(name);
         this.properties = properties;
     }
 
-    public ObjectNode(String nodeName, List<Node> properties, List<Attribute> attributes) {
-        super(nodeName, attributes);
+    public ObjectNode(String name, List<Node> properties, List<Attribute> attributes) {
+        super(name, attributes);
         this.properties = properties;
     }
 
