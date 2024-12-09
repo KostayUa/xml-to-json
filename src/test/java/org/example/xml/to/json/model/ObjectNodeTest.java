@@ -6,9 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +15,7 @@ public class ObjectNodeTest {
 
     @Nested
     class EqualsToNull {
-        Node node = createNode(Map.of(KEY1, new StringNode(VALUE1)));
+        Node node = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)));
 
         @Test
         public void nodeIsNotEqualsToNull() {
@@ -30,7 +28,7 @@ public class ObjectNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node = createNode(Map.of(KEY1, new StringNode(VALUE2)));
+            Node node = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)));
 
             @Test
             public void nodeEqualsToItself() {
@@ -47,7 +45,9 @@ public class ObjectNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node = createNode(Map.of(KEY1, new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)));
+            Node node = createNode(
+                NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+            );
 
             @Test
             public void nodeEqualsToItself() {
@@ -68,8 +68,8 @@ public class ObjectNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(Map.of(KEY1, new StringNode(VALUE2)));
-            Node node2 = createNode(Map.of(KEY1, new StringNode(VALUE2)));
+            Node node1 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)));
+            Node node2 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)));
 
             @Test
             public void nodesAreSymmetric() {
@@ -85,8 +85,12 @@ public class ObjectNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(Map.of(KEY1, new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = createNode(Map.of(KEY1, new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(
+                NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+            );
+            Node node2 = createNode(
+                NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+            );
 
             @Test
             public void nodesAreSymmetric() {
@@ -106,9 +110,9 @@ public class ObjectNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(Map.of(KEY2, new NumberNode(VALUE5)));
-            Node node2 = createNode(Map.of(KEY2, new NumberNode(VALUE5)));
-            Node node3 = createNode(Map.of(KEY2, new NumberNode(VALUE5)));
+            Node node1 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)));
+            Node node2 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)));
+            Node node3 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)));
 
             @Test
             public void nodeAreTransitivity() {
@@ -127,9 +131,15 @@ public class ObjectNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(Map.of(KEY2, new NumberNode(VALUE5)), List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = createNode(Map.of(KEY2, new NumberNode(VALUE5)), List.of(new Attribute(KEY1, VALUE1)));
-            Node node3 = createNode(Map.of(KEY2, new NumberNode(VALUE5)), List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(
+                NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+            );
+            Node node2 = createNode(
+                NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+            );
+            Node node3 = createNode(
+                NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+            );
 
             @Test
             public void nodeAreTransitivity() {
@@ -160,28 +170,54 @@ public class ObjectNodeTest {
         private static Stream<Arguments> sourceForNodeAreNotEquals() {
             return Stream.of(
                 Arguments.of(
-                    createNode(Map.of(KEY1, new StringNode(VALUE2))),
-                    createNode(Map.of(KEY2, new StringNode(VALUE1)))
+                    createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1))),
+                    createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)))
                 ),
                 Arguments.of(
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)))
+                    createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME1, VALUE1))),
+                    createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)))
                 ),
                 Arguments.of(
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY2, VALUE1)))
+                    createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1))),
+                    createNode(NODE_NAME2, List.of(new StringNode(NODE_NAME2, VALUE1)))
                 ),
                 Arguments.of(
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE2)))
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)), List.of(new Attribute(KEY1, VALUE1))
+                    ),
+                    createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)))
                 ),
                 Arguments.of(
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY2, VALUE2)))
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)), List.of(new Attribute(KEY1, VALUE1))
+                    ),
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)), List.of(new Attribute(KEY2, VALUE1))
+                    )
                 ),
                 Arguments.of(
-                    createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(Map.of(KEY2, new StringNode(VALUE2)), List.of(new Attribute(KEY1, VALUE1)))
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)), List.of(new Attribute(KEY1, VALUE1))
+                    ),
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)), List.of(new Attribute(KEY1, VALUE2))
+                    )
+                ),
+                Arguments.of(
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)), List.of(new Attribute(KEY2, VALUE2))
+                    ),
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)), List.of(new Attribute(KEY1, VALUE1))
+                    )
+                ),
+                Arguments.of(
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)), List.of(new Attribute(KEY1, VALUE1))
+                    ),
+                    createNode(
+                        NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+                    )
                 )
             );
         }
@@ -191,15 +227,17 @@ public class ObjectNodeTest {
     class NodesWithDifferentClass {
         @Test
         public void differentClassWithoutAttributes() {
-            Node node1 = createNode(Map.of(KEY1, new StringNode(VALUE1)));
-            Node node2 = new StringNode(VALUE1);
+            Node node1 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)));
+            Node node2 = new StringNode(NODE_NAME2, VALUE1);
             assertFalse(node1.equals(node2));
         }
 
         @Test
         public void differentClassWithAttributes() {
-            Node node1 = createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = new StringNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(
+                NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+            );
+            Node node2 = new StringNode(NODE_NAME2, VALUE1, List.of(new Attribute(KEY1, VALUE1)));
             assertFalse(node1.equals(node2));
         }
     }
@@ -207,35 +245,37 @@ public class ObjectNodeTest {
     @Nested
     class ToStringTest {
         @Test
-        public void ArrayNodeToString() {
-            Node node = createNode(Map.of(KEY1, new StringNode(VALUE1)));
-            String expected = "ObjectNode(properties={key1=StringNode(value='value1')})";
+        public void objectNodeToString() {
+            Node node = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE1)));
+            String expected = "ObjectNode(name='" + NODE_NAME1 + "'," +
+                " properties=[StringNode(name='" + NODE_NAME2 + "', value='" + VALUE1 + "')])";
             assertEquals(expected, node.toString());
         }
 
         @Test
-        public void ArrayNodeToStringWithAttributes() {
-            Node node = createNode(Map.of(KEY1, new StringNode(VALUE1)), List.of(new Attribute(KEY1, VALUE1)));
-            String expected = "ObjectNode(properties={key1=StringNode(value='value1')}, " +
-                "attributes=[Attribute(name='key1', value='value1')])";
+        public void objectNodeToStringWithAttributes() {
+            Node node = createNode(
+                NODE_NAME1, List.of(new StringNode(NODE_NAME2, VALUE2)), List.of(new Attribute(KEY1, VALUE1))
+            );
+            String expected = "ObjectNode(name='" + NODE_NAME1 + "', " +
+                "properties=[StringNode(name='" + NODE_NAME2 + "', value='" + VALUE2 + "')], " +
+                "attributes=[Attribute(name='" + KEY1 + "', value='" + VALUE1 + "')])";
             assertEquals(expected, node.toString());
         }
     }
 
-    private static Node createNode(Map<String, Node> properties) {
-        return new ObjectNode(properties);
+    private static Node createNode(String name, List<Node> properties) {
+        return new ObjectNode(name, properties);
     }
 
-    private static Node createNode(Map<String, Node> properties, List<Attribute> attributes) {
-        return new ObjectNode(properties, attributes);
+    private static Node createNode(String name, List<Node> properties, List<Attribute> attributes) {
+        return new ObjectNode(name, properties, attributes);
     }
 
     private static final String KEY1 = "key1";
     private static final String KEY2 = "key2";
-
     private static final String VALUE1 = "value1";
     private static final String VALUE2 = "value2";
-
-    private static final BigDecimal VALUE4 = new BigDecimal(1);
-    private static final BigDecimal VALUE5 = new BigDecimal(2);
+    private static final String NODE_NAME1 = "name1";
+    private static final String NODE_NAME2 = "name2";
 }

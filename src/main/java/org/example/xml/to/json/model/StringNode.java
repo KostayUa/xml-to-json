@@ -6,12 +6,13 @@ import java.util.Objects;
 public class StringNode extends Node {
     private final String value;
 
-    public StringNode(String value) {
+    public StringNode(String nodeName, String value) {
+        super(nodeName);
         this.value = value;
     }
 
-    public StringNode(String value, List<Attribute> attributes) {
-        super(attributes);
+    public StringNode(String nodeName, String value, List<Attribute> attributes) {
+        super(nodeName, attributes);
         this.value = value;
     }
 
@@ -26,7 +27,7 @@ public class StringNode extends Node {
         if (getClass() != o.getClass()) return false;
         StringNode that = (StringNode) o;
         if (!Objects.equals(value, that.value)) return false;
-        return super.equals2(that);
+        return super.equalsAttributes(that) && super.equalsNodeName(that);
     }
 
     public int hashCode() {
@@ -42,19 +43,27 @@ public class StringNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "StringNode(value='" + getValue() + '\'' + attrs + ")";
+        return "StringNode(name='" + getNodeName()
+            + "', value='" + getValue() + '\'' + attrs + ")";
     }
 
     public String toString2() {
         StringBuilder builder = new StringBuilder("StringNode(");
+        appendName(builder);
         appendValue(builder);
         appendAttributes(builder);
         builder.append(")");
         return builder.toString();
     }
 
+    private void appendName(StringBuilder builder) {
+        builder.append("name='");
+        builder.append(getNodeName());
+        builder.append("'");
+    }
+
     private void appendValue(StringBuilder builder) {
-        builder.append("value='");
+        builder.append(", value='");
         builder.append(getValue());
         builder.append("'");
     }

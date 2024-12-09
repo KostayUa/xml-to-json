@@ -4,38 +4,37 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Node {
+    private final String nodeName;
     private final List<Attribute> attributes;
 
-    public Node() {
-        this.attributes = List.of();
+    public Node(String name) {
+        this(name, List.of());
     }
 
-    public Node(List<Attribute> attributes) {
+    public Node(String name, List<Attribute> attributes) {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(attributes);
+        this.nodeName = name;
         this.attributes = attributes;
+    }
+
+    public String getNodeName() {
+        return nodeName;
     }
 
     public List<Attribute> getAttributes() {
         return attributes;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Node node = (Node) o;
-//        return Objects.equals(attributes, node.attributes);
-//    }
-
-//    @Override
-//    public int hashCode() {
-//        return Objects.hashCode(attributes);
-//    }
-
-    public boolean equals2(Node node) {
+    public boolean equalsAttributes(Node node) {
         return Objects.equals(attributes, node.attributes);
     }
 
+    public boolean equalsNodeName(Node node) {
+        return Objects.equals(nodeName, node.nodeName);
+    }
+
     public int hashCode(Object o) {
-        return Objects.hash(o, attributes);
+        return Objects.hash(o, nodeName, attributes);
     }
 }

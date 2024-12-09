@@ -106,7 +106,7 @@ public class AttributeTest {
         @Test
         public void differentClassWithoutAttributes() {
             Attribute attribute1 = createAttribute(NAME1, VALUE1);
-            Node node2 = new StringNode(VALUE1);
+            Node node2 = new StringNode(NODE_NAME1, VALUE1);
             assertFalse(attribute1.equals(node2));
         }
     }
@@ -114,9 +114,9 @@ public class AttributeTest {
     @Nested
     class ToStringTest {
         @Test
-        public void StringNodeToString() {
+        public void attributeNodeToString() {
             Attribute attribute = createAttribute(NAME1, VALUE1);
-            String expected = "Attribute(name='name1', value='value1')";
+            String expected = "Attribute(name='" + NAME1 + "', value='" + VALUE1 + "')";
             assertEquals(expected, attribute.toString());
         }
     }
@@ -127,7 +127,7 @@ public class AttributeTest {
 
     private static final String NAME1 = "name1";
     private static final String NAME2 = "name2";
-
+    private static final String NODE_NAME1 = "nodeName1";
     private static final String VALUE1 = "value1";
     private static final String VALUE2 = "value2";
 }

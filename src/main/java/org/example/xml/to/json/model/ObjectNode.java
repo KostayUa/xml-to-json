@@ -1,22 +1,24 @@
 package org.example.xml.to.json.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class ObjectNode extends Node {
-    private final Map<String, Node> properties;
+    private final List<Node> properties;
 
-    public ObjectNode(Map<String, Node> properties) {
+    public ObjectNode(String nodeName, List<Node> properties) {
+        super(nodeName);
         this.properties = properties;
     }
 
-    public ObjectNode(Map<String, Node> properties, List<Attribute> attributes) {
-        super(attributes);
+    public ObjectNode(String nodeName, List<Node> properties, List<Attribute> attributes) {
+        super(nodeName, attributes);
         this.properties = properties;
     }
 
-    public Map<String, Node> getProperties() {
+    public List<Node> getProperties() {
         return properties;
     }
 
@@ -26,7 +28,7 @@ public class ObjectNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         ObjectNode that = (ObjectNode) o;
         if (!Objects.equals(properties, that.properties)) return false;
-        return super.equals2(that);
+        return super.equalsAttributes(that) && super.equalsNodeName(that);
     }
 
     @Override
@@ -43,6 +45,7 @@ public class ObjectNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "ObjectNode(properties=" + getProperties() + attrs + ")";
+        return "ObjectNode(name='" + getNodeName() + '\''
+            + ", properties=" + getProperties() + attrs + ")";
     }
 }

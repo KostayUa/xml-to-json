@@ -16,7 +16,7 @@ public class NumberNodeTest {
 
     @Nested
     class EqualsToNull {
-        Node node = createNode(VAL1);
+        Node node = createNode(NODE_NAME1, VAL1);
 
         @Test
         public void nodeIsNotEqualsToNull() {
@@ -29,7 +29,7 @@ public class NumberNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node = createNode(VAL1);
+            Node node = createNode(NODE_NAME1, VAL1);
 
             @Test
             public void nodeIsEqualItSelf() {
@@ -46,7 +46,7 @@ public class NumberNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node = createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)));
 
             @Test
             public void nodeIsEqualItSelf() {
@@ -67,8 +67,8 @@ public class NumberNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(VAL1);
-            Node node2 = createNode(VAL1);
+            Node node1 = createNode(NODE_NAME1, VAL1);
+            Node node2 = createNode(NODE_NAME1, VAL1);
 
             @Test
             public void nodesAreSymmetric() {
@@ -84,8 +84,8 @@ public class NumberNodeTest {
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node2 = createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)));
 
             @Test
             public void nodesAreSymmetric() {
@@ -105,9 +105,9 @@ public class NumberNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(VAL1);
-            Node node2 = createNode(VAL1);
-            Node node3 = createNode(VAL1);
+            Node node1 = createNode(NODE_NAME1, VAL1);
+            Node node2 = createNode(NODE_NAME1, VAL1);
+            Node node3 = createNode(NODE_NAME1, VAL1);
 
             @Test
             public void nodesAreTransitivity() {
@@ -120,14 +120,15 @@ public class NumberNodeTest {
             public void hashCodeIsEquals() {
                 assertEquals(node1.hashCode(), node2.hashCode());
                 assertEquals(node2.hashCode(), node3.hashCode());
+                assertEquals(node1.hashCode(), node3.hashCode());
             }
         }
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
-            Node node3 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node2 = createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node3 = createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)));
 
             @Test
             public void nodesAreTransitivity() {
@@ -156,28 +157,29 @@ public class NumberNodeTest {
 
         private static Stream<Arguments> sourceForNodesAreNotEquals() {
             return Stream.of(
-                Arguments.of(createNode(VAL1), createNode(VAL2)),
+                Arguments.of(createNode(NODE_NAME1, VAL1), createNode(NODE_NAME1, VAL2)),
+                Arguments.of(createNode(NODE_NAME1, VAL1), createNode(NODE_NAME2, VAL1)),
                 Arguments.of(
-                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(VAL1)
+                    createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1))), createNode(NODE_NAME1, VAL1)
                 ),
                 Arguments.of(
-                    createNode(VAL1), createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)))
+                    createNode(NODE_NAME1, VAL1), createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)))
                 ),
                 Arguments.of(
-                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(VAL1, List.of(new Attribute(KEY2, VALUE1)))
+                    createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY2, VALUE1)))
                 ),
                 Arguments.of(
-                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE2)))
+                    createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE2)))
                 ),
                 Arguments.of(
-                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(VAL1, List.of(new Attribute(KEY2, VALUE2)))
+                    createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY2, VALUE2)))
                 ),
                 Arguments.of(
-                    createNode(VAL1, List.of(new Attribute(KEY1, VALUE1))),
-                    createNode(VAL2, List.of(new Attribute(KEY1, VALUE1)))
+                    createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1))),
+                    createNode(NODE_NAME1, VAL2, List.of(new Attribute(KEY1, VALUE1)))
                 )
             );
         }
@@ -187,15 +189,15 @@ public class NumberNodeTest {
     class NodeWithDifferentClass {
         @Test
         public void differentClassWithoutAttributes() {
-            Node node1 = createNode(VAL1);
-            Node node2 = new StringNode(VALUE1);
+            Node node1 = createNode(NODE_NAME1, VAL1);
+            Node node2 = new StringNode(NODE_NAME1, VALUE1);
             assertFalse(node1.equals(node2));
         }
 
         @Test
         public void differentClassWithAttributes() {
-            Node node1 = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
-            Node node2 = new StringNode(VALUE1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node1 = createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            Node node2 = new StringNode(NODE_NAME1, VALUE1, List.of(new Attribute(KEY1, VALUE1)));
             assertFalse(node1.equals(node2));
         }
     }
@@ -203,34 +205,35 @@ public class NumberNodeTest {
     @Nested
     class ToStringTest {
         @Test
-        public void NumberNodeToString() {
-            Node node = createNode(VAL1);
-            String expected = "NumberNode(value='1')";
+        public void numberNodeToString() {
+            Node node = createNode(NODE_NAME1, VAL1);
+            String expected = "NumberNode(name='" + NODE_NAME1 + "', value='" + VAL1 + "')";
             assertEquals(expected, node.toString());
         }
 
         @Test
-        public void NumberNodeToStingWithAttributes() {
-            Node node = createNode(VAL1, List.of(new Attribute(KEY1, VALUE1)));
-            String expected = "NumberNode(value='1', attributes=[Attribute(name='key1', value='value1')])";
+        public void numberNodeToStingWithAttributes() {
+            Node node = createNode(NODE_NAME1, VAL1, List.of(new Attribute(KEY1, VALUE1)));
+            String expected = "NumberNode(name='" + NODE_NAME1 + "', value='" + VAL1 + "', " +
+                "attributes=[Attribute(name='" + KEY1 + "', value='" + VALUE1 + "')])";
             assertEquals(expected, node.toString());
         }
     }
 
-    private static Node createNode(BigDecimal value) {
-        return new NumberNode(value);
+    private static Node createNode(String nodeName, BigDecimal value) {
+        return new NumberNode(nodeName, value);
     }
 
-    private static Node createNode(BigDecimal value, List<Attribute> attributes) {
-        return new NumberNode(value, attributes);
+    private static Node createNode(String nodeName, BigDecimal value, List<Attribute> attributes) {
+        return new NumberNode(nodeName, value, attributes);
     }
 
     private static final String KEY1 = "key1";
     private static final String KEY2 = "key2";
-
     private static final String VALUE1 = "value1";
     private static final String VALUE2 = "value2";
-
+    private static final String NODE_NAME1 = "name1";
+    private static final String NODE_NAME2 = "name2";
     private static final BigDecimal VAL1 = new BigDecimal(1);
     private static final BigDecimal VAL2 = new BigDecimal(2);
 }

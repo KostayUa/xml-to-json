@@ -6,12 +6,13 @@ import java.util.Objects;
 public class ArrayNode extends Node {
     private final List<Node> items;
 
-    public ArrayNode(List<Node> items) {
+    public ArrayNode(String nodeName, List<Node> items) {
+        super(nodeName);
         this.items = items;
     }
 
-    public ArrayNode(List<Node> items, List<Attribute> attributes) {
-        super(attributes);
+    public ArrayNode(String nodeName, List<Node> items, List<Attribute> attributes) {
+        super(nodeName, attributes);
         this.items = items;
     }
 
@@ -25,7 +26,7 @@ public class ArrayNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         ArrayNode arrayNode = (ArrayNode) o;
         if (!Objects.equals(items, arrayNode.items)) return false;
-        return super.equals2(arrayNode);
+        return super.equalsAttributes(arrayNode) && super.equalsNodeName(arrayNode);
     }
 
     @Override
@@ -42,6 +43,7 @@ public class ArrayNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "ArrayNode(items=" + getItems() + attrs + ")";
+        return "ArrayNode(name='" + getNodeName() + '\''
+            + ", items=" + getItems() + attrs + ")";
     }
 }

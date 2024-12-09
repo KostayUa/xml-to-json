@@ -6,12 +6,13 @@ import java.util.Objects;
 public class BooleanNode extends Node {
     private final boolean value;
 
-    public BooleanNode(boolean value) {
+    public BooleanNode(String nodeName, boolean value) {
+        super(nodeName);
         this.value = value;
     }
 
-    public BooleanNode(boolean value, List<Attribute> attributes) {
-        super(attributes);
+    public BooleanNode(String nodeName, boolean value, List<Attribute> attributes) {
+        super(nodeName, attributes);
         this.value = value;
     }
 
@@ -25,7 +26,7 @@ public class BooleanNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         BooleanNode that = (BooleanNode) o;
         if (!Objects.equals(value, that.value)) return false;
-        return super.equals2(that);
+        return super.equalsAttributes(that) && super.equalsNodeName(that);
     }
 
     @Override
@@ -42,6 +43,7 @@ public class BooleanNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "BooleanNode(value='" + getValue() + '\'' + attrs + ")";
+        return "BooleanNode(name='" + getNodeName() + '\''
+            + ", value='" + getValue() + '\'' + attrs + ")";
     }
 }

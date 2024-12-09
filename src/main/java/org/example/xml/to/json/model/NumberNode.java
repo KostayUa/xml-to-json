@@ -7,12 +7,13 @@ import java.util.Objects;
 public class NumberNode extends Node {
     private final BigDecimal value;
 
-    public NumberNode(BigDecimal value) {
+    public NumberNode(String nodeName, BigDecimal value) {
+        super(nodeName);
         this.value = value;
     }
 
-    public NumberNode(BigDecimal value, List<Attribute> attributes) {
-        super(attributes);
+    public NumberNode(String nodeName, BigDecimal value, List<Attribute> attributes) {
+        super(nodeName, attributes);
         this.value = value;
     }
 
@@ -26,7 +27,7 @@ public class NumberNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         NumberNode that = (NumberNode) o;
         if (!Objects.equals(value, that.value)) return false;
-        return super.equals2(that);
+        return super.equalsAttributes(that) && super.equalsNodeName(that);
     }
 
     @Override
@@ -43,6 +44,7 @@ public class NumberNode extends Node {
         } else {
             attrs = ", attributes=" + attributes;
         }
-        return "NumberNode(value='" + getValue() + '\'' + attrs + ")";
+        return "NumberNode(name='" + getNodeName() + '\''
+            + ", value='" + getValue() + '\'' + attrs + ")";
     }
 }
