@@ -241,6 +241,20 @@ public class StringNodeTest {
         }
     }
 
+    @Nested
+    class requireNotNullTest {
+
+        @Test
+        public void nameIsNull() {
+            assertThrows(NullPointerException.class, () -> createNode(null, VALUE1));
+        }
+
+        @Test
+        public void valueIsNull() {
+            assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, VALUE1, null));
+        }
+    }
+
     private static Node createNode(String name, String value) {
         return new StringNode(name, value);
     }
