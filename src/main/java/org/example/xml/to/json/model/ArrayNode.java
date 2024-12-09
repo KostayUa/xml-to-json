@@ -6,13 +6,13 @@ import java.util.Objects;
 public class ArrayNode extends Node {
     private final List<Node> items;
 
-    public ArrayNode(String nodeName, List<Node> items) {
-        super(nodeName);
+    public ArrayNode(String name, List<Node> items) {
+        super(name);
         this.items = items;
     }
 
-    public ArrayNode(String nodeName, List<Node> items, List<Attribute> attributes) {
-        super(nodeName, attributes);
+    public ArrayNode(String name, List<Node> items, List<Attribute> attributes) {
+        super(name, attributes);
         this.items = items;
     }
 
