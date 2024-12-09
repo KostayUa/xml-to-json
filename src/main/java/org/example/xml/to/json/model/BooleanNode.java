@@ -26,7 +26,7 @@ public class BooleanNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         BooleanNode that = (BooleanNode) o;
         if (!Objects.equals(value, that.value)) return false;
-        return super.equalsAttributes(that) && super.equalsNodeName(that);
+        return super.equalsAttributes(that) && super.equalsName(that);
     }
 
     @Override

@@ -30,7 +30,7 @@ public abstract class Node {
         return Objects.equals(attributes, node.attributes);
     }
 
-    public boolean equalsNodeName(Node node) {
+    public boolean equalsName(Node node) {
         return Objects.equals(name, node.name);
     }
 

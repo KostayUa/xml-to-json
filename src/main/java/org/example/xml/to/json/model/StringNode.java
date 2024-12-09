@@ -27,7 +27,7 @@ public class StringNode extends Node {
         if (getClass() != o.getClass()) return false;
         StringNode that = (StringNode) o;
         if (!Objects.equals(value, that.value)) return false;
-        return super.equalsAttributes(that) && super.equalsNodeName(that);
+        return super.equalsAttributes(that) && super.equalsName(that);
     }
 
     public int hashCode() {

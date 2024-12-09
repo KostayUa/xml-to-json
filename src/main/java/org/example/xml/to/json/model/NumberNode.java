@@ -27,7 +27,7 @@ public class NumberNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         NumberNode that = (NumberNode) o;
         if (!Objects.equals(value, that.value)) return false;
-        return super.equalsAttributes(that) && super.equalsNodeName(that);
+        return super.equalsAttributes(that) && super.equalsName(that);
     }
 
     @Override

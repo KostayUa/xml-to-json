@@ -26,7 +26,7 @@ public class ArrayNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         ArrayNode arrayNode = (ArrayNode) o;
         if (!Objects.equals(items, arrayNode.items)) return false;
-        return super.equalsAttributes(arrayNode) && super.equalsNodeName(arrayNode);
+        return super.equalsAttributes(arrayNode) && super.equalsName(arrayNode);
     }
 
     @Override

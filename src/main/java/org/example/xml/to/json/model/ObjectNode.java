@@ -26,7 +26,7 @@ public class ObjectNode extends Node {
         if (o == null || getClass() != o.getClass()) return false;
         ObjectNode that = (ObjectNode) o;
         if (!Objects.equals(properties, that.properties)) return false;
-        return super.equalsAttributes(that) && super.equalsNodeName(that);
+        return super.equalsAttributes(that) && super.equalsName(that);
     }
 
     @Override
