@@ -121,6 +121,20 @@ public class AttributeTest {
         }
     }
 
+    @Nested
+    class requireNotNullTest{
+
+        @Test
+        public void nameIsNull() {
+            assertThrows(NullPointerException.class, () -> createAttribute(null, VALUE1));
+        }
+
+        @Test
+        public void valueIsNull() {
+            assertThrows(NullPointerException.class, () -> createAttribute(NAME1, null));
+        }
+    }
+
     private static Attribute createAttribute(String name, String value) {
         return new Attribute(name, value);
     }
