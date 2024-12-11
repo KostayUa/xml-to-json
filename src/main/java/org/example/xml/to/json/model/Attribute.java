@@ -7,6 +7,8 @@ public class Attribute {
     private final String value;
 
     public Attribute(String name, String value) {
+        Objects.requireNonNull(name, "Name must not be null");
+        Objects.requireNonNull(value, "Value must not be null");
         this.name = name;
         this.value = value;
     }
