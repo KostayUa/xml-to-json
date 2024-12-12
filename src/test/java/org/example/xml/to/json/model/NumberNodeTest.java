@@ -229,7 +229,7 @@ public class NumberNodeTest {
         }
 
         @Test
-        public void valueIsNull() {
+        public void attributesIsNull() {
             assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, VALUE1, null));
         }
     }

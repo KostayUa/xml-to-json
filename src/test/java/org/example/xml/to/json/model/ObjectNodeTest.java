@@ -273,7 +273,7 @@ public class ObjectNodeTest {
         }
 
         @Test
-        public void valueIsNull() {
+        public void attributesIsNull() {
             assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), null));
         }
     }
