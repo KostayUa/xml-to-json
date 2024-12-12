@@ -1,16 +1,10 @@
 package org.example.xml.to.json.exceptions;
 
+import org.example.xml.to.json.model.Node;
+
 public class ArrayNodeIsNotValidException extends RuntimeException {
 
-    public ArrayNodeIsNotValidException() {
-        super();
-    }
-
-    public ArrayNodeIsNotValidException(String message) {
-        super(message);
-    }
-
-    public ArrayNodeIsNotValidException(String message, Throwable cause) {
-        super(message, cause);
+    public ArrayNodeIsNotValidException(Node node) {
+        super("ArrayNode has an invalid element." + node.getName());
     }
 }
