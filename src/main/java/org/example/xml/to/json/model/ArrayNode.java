@@ -24,14 +24,14 @@ public class ArrayNode extends Node {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ArrayNode arrayNode = (ArrayNode) o;
-        if (!Objects.equals(items, arrayNode.items)) return false;
-        return super.equalsAttributes(arrayNode) && super.equalsName(arrayNode);
+        ArrayNode that = (ArrayNode) o;
+        if (!super.equalsNode(that)) return false;
+        return Objects.equals(items, that.items);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode(items);
+        return 31 * super.hashCode() + items.hashCode();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package org.example.xml.to.json.model;
 
 import java.util.List;
-import java.util.Objects;
 
 public class NullNode extends Node {
 
@@ -18,12 +17,12 @@ public class NullNode extends Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NullNode nullNode = (NullNode) o;
-        return super.equalsName(nullNode) && super.equalsAttributes(nullNode);
+        return super.equalsNode(nullNode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getAttributes());
+        return super.hashCode();
     }
 
     @Override

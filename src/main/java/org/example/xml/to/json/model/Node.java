@@ -26,15 +26,12 @@ public abstract class Node {
         return attributes;
     }
 
-    public boolean equalsAttributes(Node node) {
-        return Objects.equals(attributes, node.attributes);
+    public boolean equalsNode(Node node) {
+        return Objects.equals(name, node.name) && Objects.equals(attributes, node.attributes);
     }
 
-    public boolean equalsName(Node node) {
-        return Objects.equals(name, node.name);
-    }
-
-    public int hashCode(Object o) {
-        return Objects.hash(o, name, attributes);
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, attributes);
     }
 }

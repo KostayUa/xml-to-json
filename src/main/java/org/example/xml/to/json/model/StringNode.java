@@ -26,12 +26,13 @@ public class StringNode extends Node {
         if (o == null) return false;
         if (getClass() != o.getClass()) return false;
         StringNode that = (StringNode) o;
-        if (!Objects.equals(value, that.value)) return false;
-        return super.equalsAttributes(that) && super.equalsName(that);
+        if (!super.equalsNode(that)) return false;
+        return Objects.equals(value, that.value);
     }
 
+    @Override
     public int hashCode() {
-        return super.hashCode(value);
+        return 31 * super.hashCode() + value.hashCode();
     }
 
     @Override

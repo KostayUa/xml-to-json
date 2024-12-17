@@ -25,8 +25,8 @@ public class Attribute {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Attribute attribute = (Attribute) o;
-        return Objects.equals(name, attribute.name) && Objects.equals(value, attribute.value);
+        Attribute that = (Attribute) o;
+        return Objects.equals(name, that.name) && Objects.equals(value, that.value);
     }
 
     @Override

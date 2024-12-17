@@ -25,13 +25,13 @@ public class ObjectNode extends Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ObjectNode that = (ObjectNode) o;
-        if (!Objects.equals(properties, that.properties)) return false;
-        return super.equalsAttributes(that) && super.equalsName(that);
+        if (!super.equalsNode(that)) return false;
+        return Objects.equals(properties, that.properties);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode(properties);
+        return 31 * super.hashCode() + properties.hashCode();
     }
 
     @Override

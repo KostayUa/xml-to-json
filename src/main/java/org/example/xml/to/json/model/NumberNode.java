@@ -26,13 +26,13 @@ public class NumberNode extends Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NumberNode that = (NumberNode) o;
-        if (!Objects.equals(value, that.value)) return false;
-        return super.equalsAttributes(that) && super.equalsName(that);
+        if (!super.equalsNode(that)) return false;
+        return Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode(value);
+        return 31 * super.hashCode() + value.hashCode();
     }
 
     @Override

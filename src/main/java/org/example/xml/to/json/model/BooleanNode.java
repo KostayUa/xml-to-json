@@ -25,13 +25,13 @@ public class BooleanNode extends Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BooleanNode that = (BooleanNode) o;
-        if (!Objects.equals(value, that.value)) return false;
-        return super.equalsAttributes(that) && super.equalsName(that);
+        if (!super.equalsNode(that)) return false;
+        return Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode(value);
+        return 31 * super.hashCode() + (value ? 1 : 0);
     }
 
     @Override
