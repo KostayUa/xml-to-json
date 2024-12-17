@@ -229,6 +229,19 @@ public class NumberNodeTest {
         }
 
         @Test
+        public void valueWithoutAttributeIsNull() {
+            assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, null));
+        }
+
+        @Test
+        public void valueWithAttributeIsNull() {
+            assertThrows(
+                NullPointerException.class, () -> createNode(NODE_NAME1, null,
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)))
+            );
+        }
+
+        @Test
         public void attributesIsNull() {
             assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, VALUE1, null));
         }
