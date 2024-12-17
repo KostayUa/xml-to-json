@@ -8,12 +8,12 @@ public class ArrayNode extends Node {
 
     public ArrayNode(String name, List<Node> items) {
         super(name);
-        this.items = items;
+        this.items = Objects.requireNonNull(items, "Items must not be null");
     }
 
     public ArrayNode(String name, List<Node> items, List<Attribute> attributes) {
         super(name, attributes);
-        this.items = items;
+        this.items = Objects.requireNonNull(items, "Items must not be null");
     }
 
     public List<Node> getItems() {
