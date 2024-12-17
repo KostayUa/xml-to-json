@@ -9,12 +9,12 @@ public class NumberNode extends Node {
 
     public NumberNode(String name, BigDecimal value) {
         super(name);
-        this.value = value;
+        this.value = Objects.requireNonNull(value, "Value must not be null");;
     }
 
     public NumberNode(String name, BigDecimal value, List<Attribute> attributes) {
         super(name, attributes);
-        this.value = value;
+        this.value = Objects.requireNonNull(value, "Value must not be null");
     }
 
     public BigDecimal getValue() {
