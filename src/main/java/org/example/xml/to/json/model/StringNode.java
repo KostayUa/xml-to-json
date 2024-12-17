@@ -8,12 +8,12 @@ public class StringNode extends Node {
 
     public StringNode(String name, String value) {
         super(name);
-        this.value = value;
+        this.value = Objects.requireNonNull(value, "Value must not be null");
     }
 
     public StringNode(String name, String value, List<Attribute> attributes) {
         super(name, attributes);
-        this.value = value;
+        this.value = Objects.requireNonNull(value, "Value must not be null");
     }
 
     public String getValue() {
