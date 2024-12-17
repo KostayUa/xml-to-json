@@ -8,12 +8,12 @@ public class ObjectNode extends Node {
 
     public ObjectNode(String name, List<Node> properties) {
         super(name);
-        this.properties = properties;
+        this.properties = Objects.requireNonNull(properties, "Properties must not be null");
     }
 
     public ObjectNode(String name, List<Node> properties, List<Attribute> attributes) {
         super(name, attributes);
-        this.properties = properties;
+        this.properties = Objects.requireNonNull(properties, "Properties must not be null");
     }
 
     public List<Node> getProperties() {
