@@ -273,6 +273,19 @@ public class ObjectNodeTest {
         }
 
         @Test
+        public void propertiesWithoutAttributeIsNull() {
+            assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, null));
+        }
+
+        @Test
+        public void propertiesWithAttributeIsNull() {
+            assertThrows(
+                NullPointerException.class, () -> createNode(NODE_NAME1, null,
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)))
+            );
+        }
+
+        @Test
         public void attributesIsNull() {
             assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), null));
         }
