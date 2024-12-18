@@ -7,4 +7,8 @@ public class ArrayNodeIsNotValidException extends RuntimeException {
     public ArrayNodeIsNotValidException(Node node) {
         super("ArrayNode has an invalid element." + node.getName());
     }
+
+    public ArrayNodeIsNotValidException() {
+        super("ArrayNode has an invalid element.");
+    }
 }
