@@ -22,13 +22,13 @@ public class XmlMapperTest {
     class Elements {
 
         @ParameterizedTest
-        @MethodSource("sourceForNodeWithStringValue")
-        public void stringElement(String xml, Node expected) {
+        @MethodSource("sourceForNodeAreEquals")
+        public void valueElement(String xml, Node expected) {
             Node actual = xmlMapper.parse(xml);
             assertEquals(expected, actual);
         }
 
-        private static Stream<Arguments> sourceForNodeWithStringValue() {
+        private static Stream<Arguments> sourceForNodeAreEquals() {
             return Stream.of(
                 //NullNode
                 Arguments.of("<name></name>", new NullNode("name")),
