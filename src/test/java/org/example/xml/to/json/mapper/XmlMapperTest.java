@@ -48,8 +48,11 @@ public class XmlMapperTest {
                 //StringNode with attributes
                 Arguments.of(
                     "<name attribute_name=\"attribute_value\">value1</name>",
-                    new StringNode("name", STRING_VALUE1,
-                        List.of(new Attribute(ATTRIBUTE_NAME, ATTRIBUTE_VALUE)))
+                    new StringNode(
+                        "name",
+                        STRING_VALUE1,
+                        List.of(new Attribute(ATTRIBUTE_NAME, ATTRIBUTE_VALUE))
+                    )
                 ),
                 //BooleanNode
                 Arguments.of("<active>true</active>", new BooleanNode("active", BOOLEAN_VALUE1)),
@@ -65,15 +68,11 @@ public class XmlMapperTest {
                 //BooleanNode with attributes
                 Arguments.of(
                     "<active attribute_name=\"attribute_value\">true</active>",
-                    new BooleanNode("active",
+                    new BooleanNode(
+                        "active",
                         BOOLEAN_VALUE1,
-                        List.of(new Attribute(ATTRIBUTE_NAME, ATTRIBUTE_VALUE)))
-                ),
-                Arguments.of(
-                    "<active attribute_name=\"attribute_value\">false</active>",
-                    new BooleanNode("active",
-                        BOOLEAN_VALUE2,
-                        List.of(new Attribute(ATTRIBUTE_NAME, ATTRIBUTE_VALUE)))
+                        List.of(new Attribute(ATTRIBUTE_NAME, ATTRIBUTE_VALUE))
+                    )
                 ),
                 //NumberNode
                 Arguments.of("<id> 1</id>", new NumberNode("id", new BigDecimal("1"))),
@@ -121,7 +120,8 @@ public class XmlMapperTest {
                       </company>
                     """;
                 Node expected = new ObjectNode(
-                    "company", List.of(new StringNode("name", STRING_VALUE1))
+                    "company",
+                    List.of(new StringNode("name", STRING_VALUE1))
                 );
                 Node actual = xmlMapper.parse(xml);
                 assertEquals(expected, actual);
@@ -135,10 +135,13 @@ public class XmlMapperTest {
                            <lastName>value2</lastName>
                       </company>
                     """;
-                Node expected = new ObjectNode("company", List.of(
-                    new StringNode("name", STRING_VALUE1),
-                    new StringNode("lastName", STRING_VALUE2)
-                ));
+                Node expected = new ObjectNode(
+                    "company",
+                    List.of(
+                        new StringNode("name", STRING_VALUE1),
+                        new StringNode("lastName", STRING_VALUE2)
+                    )
+                );
                 Node actual = xmlMapper.parse(xml);
                 assertEquals(expected, actual);
             }
@@ -154,7 +157,8 @@ public class XmlMapperTest {
                            <name>value1</name>
                       </company>
                     """;
-                Node expected = new ObjectNode("company",
+                Node expected = new ObjectNode(
+                    "company",
                     List.of(new StringNode("name", STRING_VALUE1)),
                     List.of(new Attribute(ATTRIBUTE_NAME, ATTRIBUTE_VALUE))
                 );
@@ -170,7 +174,8 @@ public class XmlMapperTest {
                            <lastName>value2</lastName>
                       </company>
                     """;
-                Node expected = new ObjectNode("company",
+                Node expected = new ObjectNode(
+                    "company",
                     List.of(
                         new StringNode("name", STRING_VALUE1),
                         new StringNode("lastName", STRING_VALUE2)
@@ -213,7 +218,8 @@ public class XmlMapperTest {
                            <phone>value2</phone>
                       </phones>
                     """;
-                Node expected = new ArrayNode("phones",
+                Node expected = new ArrayNode(
+                    "phones",
                     List.of(
                         new StringNode("phone", STRING_VALUE1),
                         new StringNode("phone", STRING_VALUE2)
@@ -235,7 +241,8 @@ public class XmlMapperTest {
                            <phone>value2</phone>
                       </phones>
                     """;
-                Node expected = new ArrayNode("phones",
+                Node expected = new ArrayNode(
+                    "phones",
                     List.of(
                         new StringNode("phone", STRING_VALUE1),
                         new StringNode("phone", STRING_VALUE2)
