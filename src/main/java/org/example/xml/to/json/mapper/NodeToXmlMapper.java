@@ -6,53 +6,48 @@ import java.util.List;
 
 public class NodeToXmlMapper {
 
-    public String convert(Node node, NullTagFormat nullTagFormat) {
+    public String convert(Node node, NullTagFormat format) {
         StringBuilder builder = new StringBuilder();
-        buildXml(node, builder, nullTagFormat);
+        printNode(node, builder, format);
         return builder.toString();
     }
 
-    private void buildXml(Node node, StringBuilder builder, NullTagFormat nullTagFormat) {
-        builder.append("<").append(node.getName());
-        appendAttribute(node, builder);
+    private void printNode(Node node, StringBuilder builder, NullTagFormat format) {
+        //start tag (add attributes)
+        printOpenTag(node, builder, format);
+        //add simple value
+        printValueTag(node, builder, format);
+        //close tag
+        printCloseTag(node, builder, format);
+    }
 
+    private void printOpenTag(Node node, StringBuilder builder, NullTagFormat format) {
         if (node instanceof NullNode) {
-            if (nullTagFormat == NullTagFormat.FULL) {
-                builder.append(">");
-                builder.append("</").append(node.getName()).append(">");
+            if (format == NullTagFormat.FULL) {
+                printOpenTagFull(node, builder);
             } else {
-                builder.append("/>");
+                printOpenTagShort(node, builder);
             }
-        } else if (node instanceof StringNode stringNode) {
-            builder.append(">");
-            builder.append(stringNode.getValue());
-            builder.append("</").append(node.getName()).append(">");
-        } else if (node instanceof NumberNode numberNode) {
-            builder.append(">");
-            builder.append(numberNode.getValue());
-            builder.append("</").append(node.getName()).append(">");
-        } else if (node instanceof BooleanNode booleanNode) {
-            builder.append(">");
-            builder.append(booleanNode.getValue());
-            builder.append("</").append(node.getName()).append(">");
-        } else if (node instanceof ObjectNode objectNode) {
-            builder.append(">");
-            List<Node> properties = objectNode.getProperties();
-            for (Node property : properties) {
-                buildXml(property, builder, nullTagFormat);
-            }
-            builder.append("</").append(node.getName()).append(">");
-        } else if (node instanceof ArrayNode arrayNode) {
-            builder.append(">");
-            List<Node> items = arrayNode.getItems();
-            for (Node item : items) {
-                buildXml(item, builder, nullTagFormat);
-            }
-            builder.append("</").append(node.getName()).append(">");
+        } else {
+            printOpenTagFull(node, builder);
         }
     }
 
-    private void appendAttribute(Node node, StringBuilder builder) {
+    private void printOpenTagFull(Node node, StringBuilder builder) {
+        builder.append("<");
+        builder.append(node.getName());
+        printAttributes(node, builder);
+        builder.append(">");
+    }
+
+    private void printOpenTagShort(Node node, StringBuilder builder) {
+        builder.append("<");
+        builder.append(node.getName());
+        printAttributes(node, builder);
+        builder.append("/>");
+    }
+
+    private void printAttributes(Node node, StringBuilder builder) {
         List<Attribute> attributes = node.getAttributes();
         if (attributes == null || attributes.isEmpty()) {
             return;
@@ -63,6 +58,43 @@ public class NodeToXmlMapper {
             builder.append("=\"");
             builder.append(attribute.getValue());
             builder.append("\"");
+        }
+    }
+
+    private void printValueTag(Node node, StringBuilder builder, NullTagFormat format) {
+        if (node instanceof NullNode) {
+
+        } else if (node instanceof StringNode stringNode) {
+            builder.append(stringNode.getValue());
+        } else if (node instanceof NumberNode numberNode) {
+            builder.append(numberNode.getValue().toPlainString());
+        } else if (node instanceof BooleanNode booleanNode) {
+            builder.append(booleanNode.getValue());
+        } else if (node instanceof ObjectNode objectNode) {
+            printListNode(objectNode.getProperties(), builder, format);
+        } else if (node instanceof ArrayNode arrayNode) {
+            printListNode(arrayNode.getItems(), builder, format);
+        } else {
+            throw new IllegalArgumentException("Unknown the Node type: " + node);
+        }
+    }
+
+    private void printListNode(List<Node> nodes, StringBuilder builder, NullTagFormat format) {
+        for (Node node : nodes) {
+            printNode(node, builder, format);
+        }
+    }
+
+    private void printCloseTag(Node node, StringBuilder builder, NullTagFormat format) {
+        if (node instanceof NullNode) {
+            //FULL -> </name>
+            //SHORT -> ""
+            if (format == NullTagFormat.FULL) {
+                builder.append("</").append(node.getName()).append(">");
+            }
+        } else {
+            //</name>
+            builder.append("</").append(node.getName()).append(">");
         }
     }
 
