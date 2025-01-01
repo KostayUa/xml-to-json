@@ -47,31 +47,25 @@ public class NodeToJsonMapper {
     }
 
     private void printObjectNode(ObjectNode objectNode, StringBuilder builder) {
-        builder.append("\"").append(objectNode.getName()).append("\":{");
-        List<Node> properties = objectNode.getProperties();
-        printListNode(properties, builder);
-        builder.append("}");
+        if (objectNode.getProperties().isEmpty()) {
+            builder.append("\"").append(objectNode.getName()).append("\":{}");
+        } else {
+            builder.append("\"").append(objectNode.getName()).append("\":{");
+            List<Node> properties = objectNode.getProperties();
+            printListNode(properties, builder);
+            builder.append("}");
+        }
     }
 
-//    private void buildObjectNode(ObjectNode objectNode, StringBuilder builder) {
-//        builder.append("{");
-//        List<Node> properties = objectNode.getProperties();
-//        for (int i = 0; i < properties.size(); i++) {
-//            Node property = properties.get(i);
-//            builder.append("\"").append(property.getName()).append("\":");
-//            printJsonFromNode(property, builder);
-//            if (i < properties.size() - 1) {
-//                builder.append(",");
-//            }
-//        }
-//        builder.append("}");
-//    }
-
     private void printArrayNode(ArrayNode arrayNode, StringBuilder builder) {
-        builder.append("\"").append(arrayNode.getName()).append("\":[{");
-        List<Node> items = arrayNode.getItems();
-        printListNode(items, builder);
-        builder.append("}]");
+        if (arrayNode.getItems().isEmpty()) {
+            builder.append("\"").append(arrayNode.getName()).append("\":[]");
+        } else {
+            builder.append("\"").append(arrayNode.getName()).append("\":[{");
+            List<Node> items = arrayNode.getItems();
+            printListNode(items, builder);
+            builder.append("}]");
+        }
     }
 
     private void printListNode(List<Node> nodes, StringBuilder builder) {
@@ -83,4 +77,3 @@ public class NodeToJsonMapper {
         }
     }
 }
-
