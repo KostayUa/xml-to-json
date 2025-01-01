@@ -50,7 +50,7 @@ public class NodeToJsonMapperTest {
                 Arguments.of(new BooleanNode("active", false), "{\"active\":false}"),
                 //ObjectNode
                 //TODO: Arguments.of(new ObjectNode("name", List.of()), "{\"name\":{}}"),
-//                Arguments.of(new ObjectNode("name", List.of()), "{\"name\":{}}"),
+                Arguments.of(new ObjectNode("name", List.of()), "{\"name\":{}}"),
                 Arguments.of(
                     new ObjectNode("company", List.of(new StringNode("name", "value"))),
                     "{\"company\":{\"name\":\"value\"}}"
@@ -67,7 +67,7 @@ public class NodeToJsonMapperTest {
                 ),
                 //ArrayNode
                 //TODO: Arguments.of(new ArrayNode("phones", List.of()), "{\"phones\":[]}"),
-//                Arguments.of(new ArrayNode("phones", List.of()), "{\"phones\":[]}"),
+                Arguments.of(new ArrayNode("phones", List.of()), "{\"phones\":[]}"),
                 Arguments.of(
                     new ArrayNode("phones", List.of(new StringNode("phone", "number"))),
                     "{\"phones\":[{\"phone\":\"number\"}]}"
@@ -81,60 +81,26 @@ public class NodeToJsonMapperTest {
                         )
                     ),
                     "{\"phones\":[{\"phone\":\"number1\",\"mobile\":\"number2\"}]}"
+                ),
+                Arguments.of(
+                    new ArrayNode(
+                        "phones",
+                        List.of(
+                            new StringNode("phone", "number1"),
+                            new StringNode("mobile", "number2"),
+                            new ObjectNode(
+                                "quantity",
+                                List.of(
+                                    new NumberNode("value", new BigDecimal("50")),
+                                    new StringNode("unit", "pcs")
+                                )
+                            )
+                        )
+                    ),
+                    "{\"phones\":[{\"phone\":\"number1\",\"mobile\":\"number2\"," +
+                        "\"quantity\":{\"value\":50,\"unit\":\"pcs\"}}]}"
                 )
             );
         }
     }
-
-//    @Nested
-//    class ObjectType {
-//
-//        @Test
-//        public void test1() {
-//            Node node = new ObjectNode("company", List.of(new StringNode("name", "value")));
-//            String expected = "{\"company\":{\"name\":\"value\"}}";
-//            String actual = nodeToJsonMapper.convert(node);
-//            assertEquals(expected, actual);
-//        }
-//
-//        @Test
-//        public void test2() {
-//            Node node = new ObjectNode(
-//                "company",
-//                List.of(
-//                    new StringNode("name", "value1"),
-//                    new StringNode("lastName", "value2")
-//                )
-//            );
-//            String expected = "{\"company\":{\"name\":\"value1\",\"lastName\":\"value2\"}}";
-//            String actual = nodeToJsonMapper.convert(node);
-//            assertEquals(expected, actual);
-//        }
-//    }
-
-//    @Nested
-//    class ArrayType {
-//
-//        @Test
-//        public void test1() {
-//            Node node = new ArrayNode("phones", List.of(new StringNode("phone", "number")));
-//            String expected = "{\"phones\":[{\"phone\":\"number\"}]}";
-//            String actual = nodeToJsonMapper.convert(node);
-//            assertEquals(expected, actual);
-//        }
-//
-//        @Test
-//        public void test2() {
-//            Node node = new ArrayNode(
-//                "phones",
-//                List.of(
-//                    new StringNode("phone", "number1"),
-//                    new StringNode("phone", "number2")
-//                )
-//            );
-//            String expected = "{\"phones\":[{\"phone\":\"number1\"},{\"phone\":\"number2\"}]}";
-//            String actual = nodeToJsonMapper.convert(node);
-//            assertEquals(expected, actual);
-//        }
-//    }
 }
