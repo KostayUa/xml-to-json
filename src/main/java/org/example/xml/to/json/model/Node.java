@@ -12,7 +12,6 @@ public abstract class Node {
     }
 
     public Node(String name, List<Attribute> attributes) {
-        Objects.requireNonNull(name, "Name must not be null");
         Objects.requireNonNull(attributes, "Attributes must not be null");
         this.name = name;
         this.attributes = attributes;
