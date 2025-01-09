@@ -8,35 +8,19 @@ public class NodeToJsonMapper {
 
     public String convert(Node node) {
         StringBuilder builder = new StringBuilder();
-        printJsonFromNode(node, builder);
+        printValue(node, builder);
         return builder.toString();
     }
 
-    private void printJsonFromNode(Node node, StringBuilder builder) {
-        builder.append("{");
-        printValue(node, builder);
-        builder.append("}");
-    }
-
     private void printValue(Node node, StringBuilder builder) {
-        if (node instanceof NullNode) {
-            builder.append("\"").append(node.getName()).append("\":null");
+        if (node instanceof NullNode nullNode) {
+            printNullNode(nullNode, builder);
         } else if (node instanceof StringNode stringNode) {
-            builder.append("\"")
-                .append(stringNode.getName())
-                .append("\":\"")
-                .append(stringNode.getValue())
-                .append("\"");
+            printStringNode(stringNode, builder);
         } else if (node instanceof NumberNode numberNode) {
-            builder.append("\"")
-                .append(numberNode.getName())
-                .append("\":")
-                .append(numberNode.getValue().toPlainString());
+            printNumberNode(numberNode, builder);
         } else if (node instanceof BooleanNode booleanNode) {
-            builder.append("\"")
-                .append(booleanNode.getName())
-                .append("\":")
-                .append(booleanNode.getValue());
+            printBooleanNode(booleanNode, builder);
         } else if (node instanceof ObjectNode objectNode) {
             printObjectNode(objectNode, builder);
         } else if (node instanceof ArrayNode arrayNode) {
@@ -46,25 +30,81 @@ public class NodeToJsonMapper {
         }
     }
 
+    private void printNullNode(NullNode nullNode, StringBuilder builder) {
+        if (nullNode.getName() == null) {
+            builder.append("null");
+        } else {
+            builder.append("\"").append(nullNode.getName()).append("\":null");
+        }
+    }
+
+    private void printStringNode(StringNode stringNode, StringBuilder builder) {
+        if (stringNode.getName() == null) {
+            builder.append("\"").append(stringNode.getValue()).append("\"");
+        } else {
+            builder.append("\"")
+                .append(stringNode.getName())
+                .append("\":\"")
+                .append(stringNode.getValue())
+                .append("\"");
+        }
+    }
+
+    private void printNumberNode(NumberNode numberNode, StringBuilder builder) {
+        if (numberNode.getName() == null) {
+            builder.append(numberNode.getValue().toPlainString());
+        } else {
+            builder.append("\"")
+                .append(numberNode.getName())
+                .append("\":")
+                .append(numberNode.getValue().toPlainString());
+        }
+    }
+
+    private void printBooleanNode(BooleanNode booleanNode, StringBuilder builder) {
+        if (booleanNode.getName() == null) {
+            builder.append(booleanNode.getValue());
+        } else {
+            builder.append("\"")
+                .append(booleanNode.getName())
+                .append("\":")
+                .append(booleanNode.getValue());
+        }
+    }
+
     private void printObjectNode(ObjectNode objectNode, StringBuilder builder) {
         if (objectNode.getProperties().isEmpty()) {
-            builder.append("\"").append(objectNode.getName()).append("\":{}");
+            if (objectNode.getName() == null) {
+                builder.append("{}");
+            } else {
+                builder.append("\"").append(objectNode.getName()).append("\":{}");
+            }
         } else {
-            builder.append("\"").append(objectNode.getName()).append("\":{");
-            List<Node> properties = objectNode.getProperties();
-            printListNode(properties, builder);
+            if (objectNode.getName() == null) {
+                builder.append("{");
+            } else {
+                builder.append("\"").append(objectNode.getName()).append("\":{");
+            }
+            printListNode(objectNode.getProperties(), builder);
             builder.append("}");
         }
     }
 
     private void printArrayNode(ArrayNode arrayNode, StringBuilder builder) {
         if (arrayNode.getItems().isEmpty()) {
-            builder.append("\"").append(arrayNode.getName()).append("\":[]");
+            if (arrayNode.getName() == null) {
+                builder.append("[]");
+            } else {
+                builder.append("\"").append(arrayNode.getName()).append("\":[]");
+            }
         } else {
-            builder.append("\"").append(arrayNode.getName()).append("\":[{");
-            List<Node> items = arrayNode.getItems();
-            printListNode(items, builder);
-            builder.append("}]");
+            if (arrayNode.getName() == null) {
+                builder.append("[");
+            } else {
+                builder.append("\"").append(arrayNode.getName()).append("\":[");
+            }
+            printListNode(arrayNode.getItems(), builder);
+            builder.append("]");
         }
     }
 
