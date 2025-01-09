@@ -29,37 +29,85 @@ public class ArrayNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
 
-            @Test
-            public void nodeEqualsToItself() {
-                assertTrue(node.equals(node));
+            @Nested
+            class NameIsNull {
+                Node node = createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+
+                @Test
+                public void nodeEqualsToItself() {
+                    assertTrue(node.equals(node));
+                }
+
+                @Test
+                public void hashCodeIsConsistent() {
+                    int hash1 = node.hashCode();
+                    int hash2 = node.hashCode();
+                    assertEquals(hash1, hash2);
+                }
             }
 
-            @Test
-            public void hashCodeIsConsistent() {
-                int hash1 = node.hashCode();
-                int hash2 = node.hashCode();
-                assertEquals(hash1, hash2);
+            @Nested
+            class NameIsNotNull {
+                Node node = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+
+                @Test
+                public void nodeEqualsToItself() {
+                    assertTrue(node.equals(node));
+                }
+
+                @Test
+                public void hashCodeIsConsistent() {
+                    int hash1 = node.hashCode();
+                    int hash2 = node.hashCode();
+                    assertEquals(hash1, hash2);
+                }
             }
         }
 
         @Nested
         class WithAttributes {
-            Node node = createNode(
-                NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
-            );
 
-            @Test
-            public void nodeEqualsToItself() {
-                assertTrue(node.equals(node));
+            @Nested
+            class NameIsNull {
+                Node node = createNode(
+                    null,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+
+                @Test
+                public void nodeEqualsToItself() {
+                    assertTrue(node.equals(node));
+                }
+
+                @Test
+                public void hashCodeIsConsistent() {
+                    int hash1 = node.hashCode();
+                    int hash2 = node.hashCode();
+                    assertEquals(hash1, hash2);
+                }
             }
 
-            @Test
-            public void hashCodeIsConsistent() {
-                int hash1 = node.hashCode();
-                int hash2 = node.hashCode();
-                assertEquals(hash1, hash2);
+            @Nested
+            class NameIsNotNull {
+                Node node = createNode(
+                    NODE_NAME1,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+
+                @Test
+                public void nodeEqualsToItself() {
+                    assertTrue(node.equals(node));
+                }
+
+                @Test
+                public void hashCodeIsConsistent() {
+                    int hash1 = node.hashCode();
+                    int hash2 = node.hashCode();
+                    assertEquals(hash1, hash2);
+                }
             }
         }
     }
@@ -69,39 +117,93 @@ public class ArrayNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
-            Node node2 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
 
-            @Test
-            public void nodesAreSymmetric() {
-                assertTrue(node1.equals(node2));
-                assertTrue(node2.equals(node1));
+            @Nested
+            class NameIsNull {
+                Node node1 = createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+                Node node2 = createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+
+                @Test
+                public void nodesAreSymmetric() {
+                    assertTrue(node1.equals(node2));
+                    assertTrue(node2.equals(node1));
+                }
+
+                @Test
+                public void hashCodeIsEquals() {
+                    assertEquals(node1.hashCode(), node2.hashCode());
+                }
             }
 
-            @Test
-            public void hashCodeIsEquals() {
-                assertEquals(node1.hashCode(), node2.hashCode());
+            @Nested
+            class NameIsNotNull {
+                Node node1 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+                Node node2 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+
+                @Test
+                public void nodesAreSymmetric() {
+                    assertTrue(node1.equals(node2));
+                    assertTrue(node2.equals(node1));
+                }
+
+                @Test
+                public void hashCodeIsEquals() {
+                    assertEquals(node1.hashCode(), node2.hashCode());
+                }
             }
         }
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(
-                NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
-            );
-            Node node2 = createNode(
-                NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
-            );
 
-            @Test
-            public void nodesAreSymmetric() {
-                assertTrue(node1.equals(node2));
-                assertTrue(node2.equals(node1));
+            @Nested
+            class NameIsNull {
+                Node node1 = createNode(
+                    null,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+                Node node2 = createNode(
+                    null,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+
+                @Test
+                public void nodesAreSymmetric() {
+                    assertTrue(node1.equals(node2));
+                    assertTrue(node2.equals(node1));
+                }
+
+                @Test
+                public void hashCodeIsEquals() {
+                    assertEquals(node1.hashCode(), node2.hashCode());
+                }
             }
 
-            @Test
-            public void hashCodeIsEquals() {
-                assertEquals(node1.hashCode(), node2.hashCode());
+            @Nested
+            class NameIsNotNull {
+                Node node1 = createNode(
+                    NODE_NAME1,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+                Node node2 = createNode(
+                    NODE_NAME1,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+
+                @Test
+                public void nodesAreSymmetric() {
+                    assertTrue(node1.equals(node2));
+                    assertTrue(node2.equals(node1));
+                }
+
+                @Test
+                public void hashCodeIsEquals() {
+                    assertEquals(node1.hashCode(), node2.hashCode());
+                }
             }
         }
     }
@@ -111,49 +213,117 @@ public class ArrayNodeTest {
 
         @Nested
         class WithoutAttributes {
-            Node node1 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
-            Node node2 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
-            Node node3 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
 
-            @Test
-            public void nodeAreTransitivity() {
-                assertTrue(node1.equals(node2));
-                assertTrue(node2.equals(node3));
-                assertTrue(node1.equals(node3));
+            @Nested
+            class NameIsNull {
+                Node node1 = createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+                Node node2 = createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+                Node node3 = createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+
+                @Test
+                public void nodeAreTransitivity() {
+                    assertTrue(node1.equals(node2));
+                    assertTrue(node2.equals(node3));
+                    assertTrue(node1.equals(node3));
+                }
+
+                @Test
+                public void hashCodeIsEquals() {
+                    assertEquals(node1.hashCode(), node2.hashCode());
+                    assertEquals(node2.hashCode(), node3.hashCode());
+                    assertEquals(node1.hashCode(), node3.hashCode());
+                }
             }
 
-            @Test
-            public void hashCodeIsEquals() {
-                assertEquals(node1.hashCode(), node2.hashCode());
-                assertEquals(node2.hashCode(), node3.hashCode());
-                assertEquals(node1.hashCode(), node3.hashCode());
+            @Nested
+            class NameIsNotNull {
+                Node node1 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+                Node node2 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+                Node node3 = createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)));
+
+                @Test
+                public void nodeAreTransitivity() {
+                    assertTrue(node1.equals(node2));
+                    assertTrue(node2.equals(node3));
+                    assertTrue(node1.equals(node3));
+                }
+
+                @Test
+                public void hashCodeIsEquals() {
+                    assertEquals(node1.hashCode(), node2.hashCode());
+                    assertEquals(node2.hashCode(), node3.hashCode());
+                    assertEquals(node1.hashCode(), node3.hashCode());
+                }
             }
         }
 
         @Nested
         class WithAttributes {
-            Node node1 = createNode(
-                NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
-            );
-            Node node2 = createNode(
-                NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
-            );
-            Node node3 = createNode(
-                NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
-            );
 
-            @Test
-            public void nodeAreTransitivity() {
-                assertTrue(node1.equals(node2));
-                assertTrue(node2.equals(node3));
-                assertTrue(node1.equals(node3));
+            @Nested
+            class NameIsNull {
+                Node node1 = createNode(
+                    null,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+                Node node2 = createNode(
+                    null,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+                Node node3 = createNode(
+                    null,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+
+                @Test
+                public void nodeAreTransitivity() {
+                    assertTrue(node1.equals(node2));
+                    assertTrue(node2.equals(node3));
+                    assertTrue(node1.equals(node3));
+                }
+
+                @Test
+                public void hashCodeIsEquals() {
+                    assertEquals(node1.hashCode(), node2.hashCode());
+                    assertEquals(node2.hashCode(), node3.hashCode());
+                    assertEquals(node1.hashCode(), node3.hashCode());
+                }
             }
 
-            @Test
-            public void hashCodeIsEquals() {
-                assertEquals(node1.hashCode(), node2.hashCode());
-                assertEquals(node2.hashCode(), node3.hashCode());
-                assertEquals(node1.hashCode(), node3.hashCode());
+            @Nested
+            class NameIsNotNull {
+                Node node1 = createNode(
+                    NODE_NAME1,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+                Node node2 = createNode(
+                    NODE_NAME1,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+                Node node3 = createNode(
+                    NODE_NAME1,
+                    List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                    List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                );
+
+                @Test
+                public void nodeAreTransitivity() {
+                    assertTrue(node1.equals(node2));
+                    assertTrue(node2.equals(node3));
+                    assertTrue(node1.equals(node3));
+                }
+
+                @Test
+                public void hashCodeIsEquals() {
+                    assertEquals(node1.hashCode(), node2.hashCode());
+                    assertEquals(node2.hashCode(), node3.hashCode());
+                    assertEquals(node1.hashCode(), node3.hashCode());
+                }
             }
         }
     }
@@ -184,52 +354,97 @@ public class ArrayNodeTest {
                 ),
                 Arguments.of(
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1), new StringNode(NODE_NAME2, STRING_VALUE2))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1), new StringNode(NODE_NAME2, STRING_VALUE2))
                     ),
                     createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)))
                 ),
                 Arguments.of(
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
                     ),
                     createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)))
                 ),
                 Arguments.of(
                     createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1))),
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
                     )
                 ),
                 Arguments.of(
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
                     ),
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME2, ATTRIBUTE_VALUE1))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME2, ATTRIBUTE_VALUE1))
                     )
                 ),
                 Arguments.of(
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
                     ),
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE2))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE2))
                     )
                 ),
                 Arguments.of(
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
                     ),
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME2, ATTRIBUTE_VALUE2))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME2, ATTRIBUTE_VALUE2))
                     )
                 ),
                 Arguments.of(
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE1)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
                     ),
                     createNode(
-                        NODE_NAME1, List.of(new StringNode(NODE_NAME1, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                        NODE_NAME1,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE2)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                    )
+                ),
+                Arguments.of(
+                    createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE1))),
+                    createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE1))),
+                    createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE1))),
+                    createNode(null, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)))
+                ),
+                Arguments.of(
+                    createNode(
+                        null,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                    ),
+                    createNode(
+                        null,
+                        List.of(new StringNode(NODE_NAME1, STRING_VALUE1)),
+                        List.of(new Attribute(ATTRIBUTE_NAME2, ATTRIBUTE_VALUE1))
                     )
                 )
             );
@@ -248,7 +463,9 @@ public class ArrayNodeTest {
         @Test
         public void differentClassWithAttributes() {
             Node node1 = createNode(
-                NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                NODE_NAME1,
+                List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
             );
             Node node2 = new NumberNode(NODE_NAME1, VALUE, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
             assertFalse(node1.equals(node2));
@@ -268,7 +485,9 @@ public class ArrayNodeTest {
         @Test
         public void arrayNodeToStringWithAttributes() {
             Node node = createNode(
-                NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
+                NODE_NAME1,
+                List.of(new StringNode(NODE_NAME2, STRING_VALUE2)),
+                List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))
             );
             String expected = "ArrayNode(name='" + NODE_NAME1 + "', " +
                 "items=[StringNode(name='" + NODE_NAME2 + "', value='" + STRING_VALUE2 + "')], " +
@@ -279,11 +498,6 @@ public class ArrayNodeTest {
 
     @Nested
     class requireNotNullTest {
-
-        @Test
-        public void nameIsNull() {
-            assertThrows(NullPointerException.class, () -> createNode(null, List.of(new StringNode(NODE_NAME1, STRING_VALUE1))));
-        }
 
         @Test
         public void itemsWithoutAttributeIsNull() {
@@ -300,7 +514,10 @@ public class ArrayNodeTest {
 
         @Test
         public void attributesIsNull() {
-            assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), null));
+            assertThrows(
+                NullPointerException.class,
+                () -> createNode(NODE_NAME1, List.of(new StringNode(NODE_NAME2, STRING_VALUE2)), null)
+            );
         }
     }
 
