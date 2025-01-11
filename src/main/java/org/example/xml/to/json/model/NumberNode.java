@@ -7,9 +7,13 @@ import java.util.Objects;
 public class NumberNode extends Node {
     private final BigDecimal value;
 
+    public NumberNode(BigDecimal value){
+        this(null, value);
+    }
+
     public NumberNode(String name, BigDecimal value) {
         super(name);
-        this.value = Objects.requireNonNull(value, "Value must not be null");;
+        this.value = Objects.requireNonNull(value, "Value must not be null");
     }
 
     public NumberNode(String name, BigDecimal value, List<Attribute> attributes) {
@@ -17,8 +21,8 @@ public class NumberNode extends Node {
         this.value = Objects.requireNonNull(value, "Value must not be null");
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public String getValue() {
+        return value.toPlainString();
     }
 
     @Override
