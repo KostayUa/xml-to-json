@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
@@ -386,6 +387,28 @@ public class NumberNodeTest {
         public void attributesIsNull() {
             assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, VALUE1, null));
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "'0', '0'",
+        "'0.0', '0.0'",
+        "'-1', '-1'",
+        "'1', '1'",
+        "'+1', '1'",
+        "'-1.02', '-1.02'",
+        "'+1.1', '1.1'",
+        "'-1.1', '-1.1'",
+        "'-1.0', '-1.0'",
+        "'1.0', '1.0'",
+        "'1.1', '1.1'",
+        "'1.11', '1.11'",
+        "'01.11', '1.11'",
+    })
+    public void validationValue(String input, String expected) {
+        NumberNode numberNode = new NumberNode(new BigDecimal(input));
+        String actual = numberNode.getValue();
+        assertEquals(expected, actual);
     }
 
     private static Node createNode(String name, BigDecimal value) {
