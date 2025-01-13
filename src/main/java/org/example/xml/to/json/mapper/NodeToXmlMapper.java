@@ -67,7 +67,7 @@ public class NodeToXmlMapper {
         } else if (node instanceof StringNode stringNode) {
             builder.append(stringNode.getValue());
         } else if (node instanceof NumberNode numberNode) {
-            builder.append(numberNode.getValue().toPlainString());
+            builder.append(numberNode.getValue());
         } else if (node instanceof BooleanNode booleanNode) {
             builder.append(booleanNode.getValue());
         } else if (node instanceof ObjectNode objectNode) {
