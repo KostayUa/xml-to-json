@@ -8,8 +8,19 @@ public class NodeToJsonMapper {
 
     public String convert(Node node) {
         StringBuilder builder = new StringBuilder();
+        boolean needEnvelop = needEnvelop(node);
+        if (needEnvelop) {
+            builder.append("{");
+        }
         printValue(node, builder);
+        if (needEnvelop) {
+            builder.append("}");
+        }
         return builder.toString();
+    }
+
+    private boolean needEnvelop(Node node) {
+        return node.hasName();
     }
 
     private void printValue(Node node, StringBuilder builder) {
@@ -31,89 +42,70 @@ public class NodeToJsonMapper {
     }
 
     private void printNullNode(NullNode nullNode, StringBuilder builder) {
-        if (nullNode.getName() == null) {
-            builder.append("null");
-        } else {
-            builder.append("\"").append(nullNode.getName()).append("\":null");
+        if (nullNode.hasName()) {
+            printName(nullNode.getName(), builder);
         }
+        builder.append("null");
     }
 
     private void printStringNode(StringNode stringNode, StringBuilder builder) {
-        if (stringNode.getName() == null) {
-            builder.append("\"").append(stringNode.getValue()).append("\"");
-        } else {
-            builder.append("\"")
-                .append(stringNode.getName())
-                .append("\":\"")
-                .append(stringNode.getValue())
-                .append("\"");
+        if (stringNode.hasName()) {
+            printName(stringNode.getName(), builder);
         }
+        builder.append("\"")
+            .append(stringNode.getValue())
+            .append("\"");
     }
 
     private void printNumberNode(NumberNode numberNode, StringBuilder builder) {
-        if (numberNode.getName() == null) {
-            builder.append(numberNode.getValue().toPlainString());
-        } else {
-            builder.append("\"")
-                .append(numberNode.getName())
-                .append("\":")
-                .append(numberNode.getValue().toPlainString());
+        if (numberNode.hasName()) {
+            printName(numberNode.getName(), builder);
         }
+        builder.append(numberNode.getValue());
     }
 
     private void printBooleanNode(BooleanNode booleanNode, StringBuilder builder) {
-        if (booleanNode.getName() == null) {
-            builder.append(booleanNode.getValue());
-        } else {
-            builder.append("\"")
-                .append(booleanNode.getName())
-                .append("\":")
-                .append(booleanNode.getValue());
+        if (booleanNode.hasName()) {
+            printName(booleanNode.getName(), builder);
         }
+        builder.append(booleanNode.getValue());
+    }
+
+    private void printName(String name, StringBuilder builder) {
+        builder.append("\"")
+            .append(name)
+            .append("\": ");
     }
 
     private void printObjectNode(ObjectNode objectNode, StringBuilder builder) {
-        if (objectNode.getProperties().isEmpty()) {
-            if (objectNode.getName() == null) {
-                builder.append("{}");
-            } else {
-                builder.append("\"").append(objectNode.getName()).append("\":{}");
-            }
-        } else {
-            if (objectNode.getName() == null) {
-                builder.append("{");
-            } else {
-                builder.append("\"").append(objectNode.getName()).append("\":{");
-            }
-            printListNode(objectNode.getProperties(), builder);
-            builder.append("}");
+        if (objectNode.hasName()) {
+            printName(objectNode.getName(), builder);
         }
+        builder.append("{");
+        printListNode(objectNode.getProperties(), builder);
+        builder.append("}");
     }
 
     private void printArrayNode(ArrayNode arrayNode, StringBuilder builder) {
-        if (arrayNode.getItems().isEmpty()) {
-            if (arrayNode.getName() == null) {
-                builder.append("[]");
-            } else {
-                builder.append("\"").append(arrayNode.getName()).append("\":[]");
-            }
-        } else {
-            if (arrayNode.getName() == null) {
-                builder.append("[");
-            } else {
-                builder.append("\"").append(arrayNode.getName()).append("\":[");
-            }
-            printListNode(arrayNode.getItems(), builder);
-            builder.append("]");
+        if (arrayNode.hasName()) {
+            printName(arrayNode.getName(), builder);
         }
+        builder.append("[");
+        printListNode(arrayNode.getItems(), builder);
+        builder.append("]");
     }
 
     private void printListNode(List<Node> nodes, StringBuilder builder) {
-        for (int i = 0; i < nodes.size(); i++) {
+        int size = nodes.size();
+        for (int i = 0; i < size; i++) {
             printValue(nodes.get(i), builder);
-            if (i < nodes.size() - 1) {
-                builder.append(",");
+            if (needAddDelimiter(i, size)) {
+                builder.append(", ");
             }
         }
+    }
+
+    private boolean needAddDelimiter(int index, int size) {
+        return index < size - 1;
     }
 }
