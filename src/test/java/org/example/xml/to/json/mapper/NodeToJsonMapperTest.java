@@ -27,78 +27,167 @@ public class NodeToJsonMapperTest {
 
         private static Stream<Arguments> sourceNodeForValueJson() {
             return Stream.of(
-                //NullNode
-                Arguments.of(new NullNode("name"), "{\"name\":null}"),
-                //StringNode
-                Arguments.of(new StringNode("name", "value"), "{\"name\":\"value\"}"),
-                Arguments.of(new StringNode("name", ""), "{\"name\":\"\"}"),
-                //NumberNode
-                Arguments.of(new NumberNode("id", new BigDecimal("1")), "{\"id\":1}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("0")), "{\"id\":0}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("0.0")), "{\"id\":0.0}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("-1")), "{\"id\":-1}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("+1")), "{\"id\":1}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("-1.02")), "{\"id\":-1.02}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("+1.1")), "{\"id\":1.1}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("-1.1")), "{\"id\":-1.1}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("1.0")), "{\"id\":1.0}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("1.1")), "{\"id\":1.1}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("1.11")), "{\"id\":1.11}"),
-                Arguments.of(new NumberNode("id", new BigDecimal("01.11")), "{\"id\":1.11}"),
-                //BooleanNode
-                Arguments.of(new BooleanNode("active", true), "{\"active\":true}"),
-                Arguments.of(new BooleanNode("active", false), "{\"active\":false}"),
-                //ObjectNode
-                //TODO: Arguments.of(new ObjectNode("name", List.of()), "{\"name\":{}}"),
-                Arguments.of(new ObjectNode("name", List.of()), "{\"name\":{}}"),
+                //Null
+                Arguments.of(new NullNode(null), "null"),
+                Arguments.of(new NullNode("id"), "{\"id\": null}"),
+                //Boolean
+                Arguments.of(new BooleanNode(null, true), "true"),
+                Arguments.of(new BooleanNode(null, false), "false"),
+                Arguments.of(new BooleanNode("isActive", true), "{\"isActive\": true}"),
+                //String
+                Arguments.of(new StringNode(null, ""), "\"\""),
+                Arguments.of(new StringNode(null, "   "), "\"   \""),
+                Arguments.of(new StringNode(null, "text"), "\"text\""),
+                Arguments.of(new StringNode("name", "text"), "{\"name\": \"text\"}"),
+                //Number
+                Arguments.of(new NumberNode(null, new BigDecimal("-123")), "-123"),
+                Arguments.of(new NumberNode(null, new BigDecimal("123")), "123"),
+                Arguments.of(new NumberNode(null, new BigDecimal("-1.0")), "-1.0"),
+                Arguments.of(new NumberNode(null, new BigDecimal("1.0")), "1.0"),
+                Arguments.of(new NumberNode("phone", new BigDecimal("1.0")), "{\"phone\": 1.0}"),
+                //Object
+                Arguments.of(new ObjectNode(null, List.of()), "{}"),
                 Arguments.of(
-                    new ObjectNode("company", List.of(new StringNode("name", "value"))),
-                    "{\"company\":{\"name\":\"value\"}}"
+                    new ObjectNode(null, List.of(new NullNode("id"))), "{\"id\": null}"
                 ),
                 Arguments.of(
                     new ObjectNode(
-                        "company",
+                        null, List.of(new BooleanNode("isActive", true))
+                    ),
+                    "{\"isActive\": true}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null, List.of(new BooleanNode("isActive", false))
+                    ),
+                    "{\"isActive\": false}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null, List.of(new StringNode("name", "text"))
+                    ),
+                    "{\"name\": \"text\"}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null, List.of(new NumberNode("id", new BigDecimal("-123")))
+                    ),
+                    "{\"id\": -123}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null, List.of(new NumberNode("id", new BigDecimal("123")))
+                    ),
+                    "{\"id\": 123}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null,
+                        List.of(new NumberNode("id", new BigDecimal("-1.0")))
+                    ),
+                    "{\"id\": -1.0}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null,
+                        List.of(new NumberNode("id", new BigDecimal("1.0")))
+                    ),
+                    "{\"id\": 1.0}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null,
+                        List.of(new ObjectNode("phone", List.of()))
+                    ),
+                    "{\"phone\": {}}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null,
+                        List.of(new ArrayNode("phones", List.of()))
+                    ),
+                    "{\"phones\": []}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        null,
                         List.of(
-                            new StringNode("name", "value1"),
-                            new StringNode("lastName", "value2")
+                            new NumberNode("id", new BigDecimal("123")),
+                            new BooleanNode("isActive", true)
                         )
                     ),
-                    "{\"company\":{\"name\":\"value1\",\"lastName\":\"value2\"}}"
+                    "{\"id\": 123, \"isActive\": true}"
+                ),
+                Arguments.of(
+                    new ObjectNode(
+                        "user",
+                        List.of(new StringNode("id", "123"))
+                    ),
+                    "{\"user\": {\"id\": \"123\"}}"
                 ),
                 //ArrayNode
-                //TODO: Arguments.of(new ArrayNode("phones", List.of()), "{\"phones\":[]}"),
-                Arguments.of(new ArrayNode("phones", List.of()), "{\"phones\":[]}"),
+                Arguments.of(new ArrayNode(null, List.of()), "[]"),
+                Arguments.of(new ArrayNode(null, List.of(new NullNode(null))), "[null]"),
                 Arguments.of(
-                    new ArrayNode("phones", List.of(new StringNode("phone", "number"))),
-                    "{\"phones\":[{\"phone\":\"number\"}]}"
+                    new ArrayNode(null, List.of(new BooleanNode(null, true))), "[true]"
+                ),
+                Arguments.of(
+                    new ArrayNode(null, List.of(new BooleanNode(null, false))), "[false]"
+                ),
+                Arguments.of(
+                    new ArrayNode(null, List.of(new StringNode(null, "text"))), "[\"text\"]"
                 ),
                 Arguments.of(
                     new ArrayNode(
-                        "phones",
-                        List.of(
-                            new StringNode("phone", "number1"),
-                            new StringNode("mobile", "number2")
-                        )
+                        null,
+                        List.of(new NumberNode(null, new BigDecimal("-123")))
                     ),
-                    "{\"phones\":[{\"phone\":\"number1\",\"mobile\":\"number2\"}]}"
+                    "[-123]"
                 ),
                 Arguments.of(
                     new ArrayNode(
-                        "phones",
+                        null, List.of(new NumberNode(null, new BigDecimal("123")))
+                    ),
+                    "[123]"
+                ),
+                Arguments.of(
+                    new ArrayNode(
+                        null,
+                        List.of(new NumberNode(null, new BigDecimal("-1.0")))
+                    ),
+                    "[-1.0]"
+                ),
+                Arguments.of(
+                    new ArrayNode(
+                        null,
+                        List.of(new NumberNode(null, new BigDecimal("1.0")))
+                    ),
+                    "[1.0]"
+                ),
+                Arguments.of(
+                    new ArrayNode(null, List.of(new ObjectNode(null, List.of()))), "[{}]"
+                ),
+                Arguments.of(
+                    new ArrayNode(
+                        null,
                         List.of(
-                            new StringNode("phone", "number1"),
-                            new StringNode("mobile", "number2"),
-                            new ObjectNode(
-                                "quantity",
-                                List.of(
-                                    new NumberNode("value", new BigDecimal("50")),
-                                    new StringNode("unit", "pcs")
-                                )
-                            )
+                            new ObjectNode(null, List.of(new NumberNode("id", new BigDecimal("123"))))
                         )
                     ),
-                    "{\"phones\":[{\"phone\":\"number1\",\"mobile\":\"number2\"," +
-                        "\"quantity\":{\"value\":50,\"unit\":\"pcs\"}}]}"
+                    "[{\"id\": 123}]"
+                ),
+                Arguments.of(
+                    new ArrayNode(null, List.of(new ArrayNode(null, List.of()))), "[[]]"
+                ),
+                Arguments.of(
+                    new ArrayNode(
+                        null,
+                        List.of(
+                            new NumberNode(null, new BigDecimal("123")),
+                            new NumberNode(null, new BigDecimal("456"))
+                        )
+                    ),
+                    "[123, 456]"
                 )
             );
         }
