@@ -21,6 +21,10 @@ public abstract class Node {
         return name;
     }
 
+    public boolean hasName() {
+        return getName() != null;
+    }
+
     public List<Attribute> getAttributes() {
         return attributes;
     }
