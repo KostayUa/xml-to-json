@@ -30,21 +30,54 @@ public class NodeToJsonMapperTest {
                 //Null
                 Arguments.of(new NullNode(null), "null"),
                 Arguments.of(new NullNode("id"), "{\"id\": null}"),
+                Arguments.of(
+                    new NullNode(
+                        "id",
+                        List.of(
+                            new Attribute("attribute_name", "attribute_value")
+                        )
+                    ),
+                    "{\"id\": null, \"id_attributes\": {\"attribute_name\": \"attribute_value\"}}"
+                ),
                 //Boolean
                 Arguments.of(new BooleanNode(null, true), "true"),
                 Arguments.of(new BooleanNode(null, false), "false"),
                 Arguments.of(new BooleanNode("isActive", true), "{\"isActive\": true}"),
+                Arguments.of(
+                    new BooleanNode(
+                        "isActive",
+                        true,
+                        List.of(new Attribute("attribute_name", "attribute_value"))
+                    ),
+                    "{\"isActive\": true, \"isActive_attributes\": {\"attribute_name\": \"attribute_value\"}}"
+                ),
                 //String
                 Arguments.of(new StringNode(null, ""), "\"\""),
                 Arguments.of(new StringNode(null, "   "), "\"   \""),
                 Arguments.of(new StringNode(null, "text"), "\"text\""),
                 Arguments.of(new StringNode("name", "text"), "{\"name\": \"text\"}"),
+                Arguments.of(
+                    new StringNode(
+                        "name",
+                        "text",
+                        List.of(new Attribute("attribute_name", "attribute_value"))
+                    ),
+                    "{\"name\": \"text\", \"name_attributes\": {\"attribute_name\": \"attribute_value\"}}"
+                ),
                 //Number
                 Arguments.of(new NumberNode(null, new BigDecimal("-123")), "-123"),
                 Arguments.of(new NumberNode(null, new BigDecimal("123")), "123"),
                 Arguments.of(new NumberNode(null, new BigDecimal("-1.0")), "-1.0"),
                 Arguments.of(new NumberNode(null, new BigDecimal("1.0")), "1.0"),
                 Arguments.of(new NumberNode("phone", new BigDecimal("1.0")), "{\"phone\": 1.0}"),
+                Arguments.of(
+                    new NumberNode(
+                        "phone",
+                        new BigDecimal("1.0"),
+                        List.of(new Attribute("attribute_name", "attribute_value"))
+                    ),
+                    "{\"phone\": 1.0, \"phone_attributes\": {\"attribute_name\": \"attribute_value\"}}"
+                ),
                 //Object
                 Arguments.of(new ObjectNode(null, List.of()), "{}"),
                 Arguments.of(
@@ -125,6 +158,14 @@ public class NodeToJsonMapperTest {
                     ),
                     "{\"user\": {\"id\": \"123\"}}"
                 ),
+                Arguments.of(
+                    new ObjectNode(
+                        "user",
+                        List.of(),
+                        List.of(new Attribute("attribute_name", "attribute_value"))
+                    ),
+                    "{\"user\": {}, \"user_attributes\": {\"attribute_name\": \"attribute_value\"}}"
+                ),
                 //ArrayNode
                 Arguments.of(new ArrayNode(null, List.of()), "[]"),
                 Arguments.of(new ArrayNode(null, List.of(new NullNode(null))), "[null]"),
@@ -188,6 +229,14 @@ public class NodeToJsonMapperTest {
                         )
                     ),
                     "[123, 456]"
+                ),
+                Arguments.of(
+                    new ArrayNode(
+                        "users",
+                        List.of(),
+                        List.of(new Attribute("attribute_name", "attribute_value"))
+                    ),
+                    "{\"users\": [], \"users_attributes\": {\"attribute_name\": \"attribute_value\"}}"
                 )
             );
         }
