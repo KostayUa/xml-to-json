@@ -7,14 +7,18 @@ public abstract class Node {
     private final String name;
     private final List<Attribute> attributes;
 
+    public Node() {
+        this.name = null;
+        this.attributes = List.of();
+    }
+
     public Node(String name) {
         this(name, List.of());
     }
 
     public Node(String name, List<Attribute> attributes) {
-        Objects.requireNonNull(attributes, "Attributes must not be null");
-        this.name = name;
-        this.attributes = attributes;
+        this.name = Objects.requireNonNull(name, "Name must not be null");
+        this.attributes = Objects.requireNonNull(attributes, "Attributes must not be null");
     }
 
     public String getName() {

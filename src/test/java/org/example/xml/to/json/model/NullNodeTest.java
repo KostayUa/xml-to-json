@@ -31,7 +31,7 @@ public class NullNodeTest {
 
             @Nested
             class NameIsNull {
-                Node node = createNode(null);
+                Node node = createNode();
 
                 @Test
                 public void nodeIsEqualItSelf() {
@@ -90,8 +90,8 @@ public class NullNodeTest {
 
             @Nested
             class NameIsNull {
-                Node node1 = createNode(null);
-                Node node2 = createNode(null);
+                Node node1 = createNode();
+                Node node2 = createNode();
 
                 @Test
                 public void nodesAreSymmetric() {
@@ -149,9 +149,9 @@ public class NullNodeTest {
 
             @Nested
             class NameIsNull {
-                Node node1 = createNode(null);
-                Node node2 = createNode(null);
-                Node node3 = createNode(null);
+                Node node1 = createNode();
+                Node node2 = createNode();
+                Node node3 = createNode();
 
                 @Test
                 public void nodesAreTransitivity() {
@@ -250,8 +250,8 @@ public class NullNodeTest {
                     createNode(NODE_NAME1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))),
                     createNode(NODE_NAME2, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)))
                 ),
-                Arguments.of(createNode(null), createNode(NODE_NAME1)),
-                Arguments.of(createNode(NODE_NAME2), createNode(null))
+                Arguments.of(createNode(), createNode(NODE_NAME1)),
+                Arguments.of(createNode(NODE_NAME2), createNode())
             );
         }
     }
@@ -298,6 +298,10 @@ public class NullNodeTest {
         public void attributesIsNull() {
             assertThrows(NullPointerException.class, () -> createNode(NODE_NAME1, null));
         }
+    }
+
+    private static Node createNode() {
+        return new NullNode();
     }
 
     private static Node createNode(String name) {

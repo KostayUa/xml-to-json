@@ -33,7 +33,7 @@ public class NumberNodeTest {
 
             @Nested
             class NameIsNull {
-                Node node = createNode(null, VALUE1);
+                Node node = createNode(VALUE1);
 
                 @Test
                 public void nodeIsEqualItSelf() {
@@ -70,23 +70,6 @@ public class NumberNodeTest {
         class WithAttributes {
 
             @Nested
-            class NameIsNull {
-                Node node = createNode(null, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
-
-                @Test
-                public void nodeIsEqualItSelf() {
-                    assertTrue(node.equals(node));
-                }
-
-                @Test
-                public void hashCodeAlwaysTheSame() {
-                    int hash1 = node.hashCode();
-                    int hash2 = node.hashCode();
-                    assertEquals(hash1, hash2);
-                }
-            }
-
-            @Nested
             class NameIsNotNull {
                 Node node = createNode(NODE_NAME1, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
 
@@ -113,8 +96,8 @@ public class NumberNodeTest {
 
             @Nested
             class NameIsNull {
-                Node node1 = createNode(null, VALUE1);
-                Node node2 = createNode(null, VALUE1);
+                Node node1 = createNode(VALUE1);
+                Node node2 = createNode(VALUE1);
 
                 @Test
                 public void nodesAreSymmetric() {
@@ -150,23 +133,6 @@ public class NumberNodeTest {
         class WithAttributes {
 
             @Nested
-            class NameIsNull {
-                Node node1 = createNode(null, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
-                Node node2 = createNode(null, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
-
-                @Test
-                public void nodesAreSymmetric() {
-                    assertTrue(node1.equals(node2));
-                    assertTrue(node2.equals(node1));
-                }
-
-                @Test
-                public void hashCodeIsEquals() {
-                    assertEquals(node1.hashCode(), node2.hashCode());
-                }
-            }
-
-            @Nested
             class NameIsNotNull {
                 Node node1 = createNode(NODE_NAME1, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
                 Node node2 = createNode(NODE_NAME1, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
@@ -193,9 +159,9 @@ public class NumberNodeTest {
 
             @Nested
             class NameIsNull {
-                Node node1 = createNode(null, VALUE1);
-                Node node2 = createNode(null, VALUE1);
-                Node node3 = createNode(null, VALUE1);
+                Node node1 = createNode(VALUE1);
+                Node node2 = createNode(VALUE1);
+                Node node3 = createNode(VALUE1);
 
                 @Test
                 public void nodesAreTransitivity() {
@@ -236,26 +202,6 @@ public class NumberNodeTest {
 
         @Nested
         class WithAttributes {
-
-            @Nested
-            class NameIsNull {
-                Node node1 = createNode(null, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
-                Node node2 = createNode(null, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
-                Node node3 = createNode(null, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)));
-
-                @Test
-                public void nodesAreTransitivity() {
-                    assertTrue(node1.equals(node2));
-                    assertTrue(node2.equals(node3));
-                    assertTrue(node1.equals(node3));
-                }
-
-                @Test
-                public void hashCodeIsEquals() {
-                    assertEquals(node1.hashCode(), node2.hashCode());
-                    assertEquals(node2.hashCode(), node3.hashCode());
-                }
-            }
 
             @Nested
             class NameIsNotNull {
@@ -317,13 +263,9 @@ public class NumberNodeTest {
                     createNode(NODE_NAME1, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))),
                     createNode(NODE_NAME1, VALUE2, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1)))
                 ),
-                Arguments.of(createNode(null, VALUE1), createNode(null, VALUE2)),
-                Arguments.of(createNode(null, VALUE1), createNode(NODE_NAME1, VALUE2)),
-                Arguments.of(createNode(NODE_NAME1, VALUE1), createNode(null, VALUE2)),
-                Arguments.of(
-                    createNode(null, VALUE1, List.of(new Attribute(ATTRIBUTE_NAME1, ATTRIBUTE_VALUE1))),
-                    createNode(null, VALUE2, List.of(new Attribute(ATTRIBUTE_NAME2, ATTRIBUTE_VALUE1)))
-                )
+                Arguments.of(createNode(VALUE1), createNode(VALUE2)),
+                Arguments.of(createNode(VALUE1), createNode(NODE_NAME1, VALUE2)),
+                Arguments.of(createNode(NODE_NAME1, VALUE1), createNode(VALUE2))
             );
         }
     }
@@ -409,6 +351,10 @@ public class NumberNodeTest {
         NumberNode numberNode = new NumberNode(new BigDecimal(input));
         String actual = numberNode.getValue();
         assertEquals(expected, actual);
+    }
+
+    private static Node createNode(BigDecimal value) {
+        return new NumberNode(value);
     }
 
     private static Node createNode(String name, BigDecimal value) {

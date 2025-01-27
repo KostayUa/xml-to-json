@@ -4,6 +4,10 @@ import java.util.List;
 
 public class NullNode extends Node {
 
+    public NullNode() {
+        super();
+    }
+
     public NullNode(String name) {
         super(name);
     }

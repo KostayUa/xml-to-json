@@ -6,6 +6,11 @@ import java.util.Objects;
 public class ArrayNode extends Node {
     private final List<Node> items;
 
+    public ArrayNode(List<Node> items) {
+        super();
+        this.items = Objects.requireNonNull(items, "Items must not be null");
+    }
+
     public ArrayNode(String name, List<Node> items) {
         super(name);
         this.items = Objects.requireNonNull(items, "Items must not be null");

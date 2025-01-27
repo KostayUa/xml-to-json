@@ -6,6 +6,11 @@ import java.util.Objects;
 public class ObjectNode extends Node {
     private final List<Node> properties;
 
+    public ObjectNode(List<Node> properties) {
+        super();
+        this.properties = Objects.requireNonNull(properties, "Properties must not be null");
+    }
+
     public ObjectNode(String name, List<Node> properties) {
         super(name);
         this.properties = Objects.requireNonNull(properties, "Properties must not be null");

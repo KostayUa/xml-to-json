@@ -6,6 +6,11 @@ import java.util.Objects;
 public class BooleanNode extends Node {
     private final boolean value;
 
+    public BooleanNode(boolean value) {
+        super();
+        this. value = value;
+    }
+
     public BooleanNode(String name, boolean value) {
         super(name);
         this.value = value;

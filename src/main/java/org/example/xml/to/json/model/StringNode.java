@@ -6,6 +6,11 @@ import java.util.Objects;
 public class StringNode extends Node {
     private final String value;
 
+    public StringNode(String value) {
+        super();
+        this.value = Objects.requireNonNull(value, "Value must not be null");
+    }
+
     public StringNode(String name, String value) {
         super(name);
         this.value = Objects.requireNonNull(value, "Value must not be null");
