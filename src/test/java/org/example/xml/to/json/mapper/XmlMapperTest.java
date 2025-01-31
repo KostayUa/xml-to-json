@@ -195,7 +195,7 @@ public class XmlMapperTest {
         class InvalidNodeType {
 
             @Test
-            public void UnExpectedNodeType() {
+            public void unExpectedNodeType() {
                 String xml = """
                       <phones>
                            <phone>value1</phone>
@@ -211,7 +211,7 @@ public class XmlMapperTest {
         class WithoutAttributes {
 
             @Test
-            public void ArrayType() {
+            public void arrayType() {
                 String xml = """
                       <phones>
                            <phone>value1</phone>
@@ -228,13 +228,42 @@ public class XmlMapperTest {
                 Node actual = xmlMapper.parse(xml);
                 assertEquals(expected, actual);
             }
+
+            @Test
+            public void arrayTypeWithNestedObject() {
+                String xml = """
+                         <productLines>
+                                    <productLine>
+                                        <code>123</code>
+                                    </productLine>
+                                    <productLine>
+                                        <code>456</code>
+                                    </productLine>
+                         </productLines>
+                    """;
+                Node expected = new ArrayNode(
+                    "productLines",
+                    List.of(
+                        new ObjectNode(
+                            "productLine",
+                            List.of(new NumberNode("code", new BigDecimal("123")))
+                        ),
+                        new ObjectNode(
+                            "productLine",
+                            List.of(new NumberNode("code", new BigDecimal("456")))
+                        )
+                    )
+                );
+                Node actual = xmlMapper.parse(xml);
+                assertEquals(expected, actual);
+            }
         }
 
         @Nested
         class WithAttributes {
 
             @Test
-            public void ArrayElement() {
+            public void arrayElement() {
                 String xml = """
                       <phones attribute_name="attribute_value">
                            <phone>value1</phone>
