@@ -27,10 +27,14 @@ public class JsonMapper {
     private Node parseJsonNode(String name, JsonNode jsonNode) {
         JsonNodeType nodeType = jsonNode.getNodeType();
         return switch (nodeType) {
-            case NULL -> new NullNode(name);
-            case BOOLEAN -> new BooleanNode(name, jsonNode.asBoolean());
-            case STRING -> new StringNode(name, jsonNode.textValue());
-            case NUMBER -> new NumberNode(name, new BigDecimal(jsonNode.asText()));
+            case NULL -> name == null ? new NullNode() : new NullNode(name);
+            case BOOLEAN ->
+                name == null ? new BooleanNode(jsonNode.asBoolean()) : new BooleanNode(name, jsonNode.asBoolean());
+            case STRING ->
+                name == null ? new StringNode(jsonNode.textValue()) : new StringNode(name, jsonNode.textValue());
+            case NUMBER -> null == name
+                ? new NumberNode(new BigDecimal(jsonNode.asText()))
+                : new NumberNode(name, new BigDecimal(jsonNode.asText()));
             case OBJECT -> parseObjectNode(name, jsonNode);
             case ARRAY -> parseArrayNode(name, jsonNode);
             default -> throw new IllegalArgumentException("Unknown JsonNode type: " + jsonNode);
@@ -45,7 +49,7 @@ public class JsonMapper {
             Node child = parseJsonNode(fieldName, jsonNode.get(fieldName));
             properties.add(child);
         }
-        return new ObjectNode(name, properties);
+        return name != null ? new ObjectNode(name, properties) : new ObjectNode(properties);
     }
 
     private Node parseArrayNode(String name, JsonNode jsonNode) {
@@ -53,6 +57,6 @@ public class JsonMapper {
         for (JsonNode item : jsonNode) {
             items.add(parseJsonNode(null, item));
         }
-        return new ArrayNode(name, items);
+        return name != null ? new ArrayNode(name, items) : new ArrayNode(items);
     }
 }
