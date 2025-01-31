@@ -13,12 +13,16 @@ public class NodeToXmlMapper {
     }
 
     private void printNode(Node node, StringBuilder builder, NullTagFormat format) {
-        //start tag (add attributes)
-        printOpenTag(node, builder, format);
-        //add simple value
-        printValueTag(node, builder, format);
-        //close tag
-        printCloseTag(node, builder, format);
+        if (node.hasName()) {
+            //start tag (add attributes)
+            printOpenTag(node, builder, format);
+            //add simple value
+            printValueTag(node, builder, format);
+            //close tag
+            printCloseTag(node, builder, format);
+        } else {
+            printValueTag(node, builder, format);
+        }
     }
 
     private void printOpenTag(Node node, StringBuilder builder, NullTagFormat format) {
