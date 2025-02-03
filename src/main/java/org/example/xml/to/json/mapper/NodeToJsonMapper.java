@@ -43,76 +43,57 @@ public class NodeToJsonMapper {
 
     private void printAttributes(Node node, StringBuilder builder) {
         List<Attribute> attributes = node.getAttributes();
+        if (attributes.isEmpty()) {
+            return;
+        }
+        builder.append(", \"")
+            .append(node.getName())
+            .append("_attributes\": {\"");
         for (int i = 0; i < attributes.size(); i++) {
             Attribute attribute = attributes.get(i);
-            builder.append(", \"")
-                .append(node.getName())
-                .append("_attributes\": {\"")
-                .append(attribute.getName())
+            builder.append(attribute.getName())
                 .append("\": \"")
                 .append(attribute.getValue())
                 .append("\"");
             if (needAddDelimiter(i, attributes.size())) {
-                builder.append(", ");
+                builder.append(", \"");
             }
-            builder.append("}");
         }
-    }
-
-    private boolean hasAttributes(Node node) {
-        return node.getAttributes() != null;
+        builder.append("}");
     }
 
     private void printNullNode(NullNode nullNode, StringBuilder builder) {
         if (nullNode.hasName()) {
             printName(nullNode.getName(), builder);
-            builder.append("null");
-            if (hasAttributes(nullNode)) {
-                printAttributes(nullNode, builder);
-            }
-        } else {
-            builder.append("null");
         }
+        builder.append("null");
+        printAttributes(nullNode, builder);
     }
 
     private void printStringNode(StringNode stringNode, StringBuilder builder) {
         if (stringNode.hasName()) {
             printName(stringNode.getName(), builder);
-            builder.append("\"")
-                .append(stringNode.getValue())
-                .append("\"");
-            if (hasAttributes(stringNode)) {
-                printAttributes(stringNode, builder);
-            }
-        } else {
-            builder.append("\"")
-                .append(stringNode.getValue())
-                .append("\"");
         }
+        builder.append("\"")
+            .append(stringNode.getValue())
+            .append("\"");
+        printAttributes(stringNode, builder);
     }
 
     private void printNumberNode(NumberNode numberNode, StringBuilder builder) {
         if (numberNode.hasName()) {
             printName(numberNode.getName(), builder);
-            builder.append(numberNode.getValue());
-            if (hasAttributes(numberNode)) {
-                printAttributes(numberNode, builder);
-            }
-        } else {
-            builder.append(numberNode.getValue());
         }
+        builder.append(numberNode.getValue());
+        printAttributes(numberNode, builder);
     }
 
     private void printBooleanNode(BooleanNode booleanNode, StringBuilder builder) {
         if (booleanNode.hasName()) {
             printName(booleanNode.getName(), builder);
-            builder.append(booleanNode.getValue());
-            if (hasAttributes(booleanNode)) {
-                printAttributes(booleanNode, builder);
-            }
-        } else {
-            builder.append(booleanNode.getValue());
         }
+        builder.append(booleanNode.getValue());
+        printAttributes(booleanNode, builder);
     }
 
     private void printName(String name, StringBuilder builder) {
@@ -122,34 +103,44 @@ public class NodeToJsonMapper {
     }
 
     private void printObjectNode(ObjectNode objectNode, StringBuilder builder) {
-        if (objectNode.hasName()) {
-            printName(objectNode.getName(), builder);
-            builder.append("{");
-            printListNode(objectNode.getProperties(), builder);
-            builder.append("}");
-            if (hasAttributes(objectNode)) {
-                printAttributes(objectNode, builder);
-            }
-        } else {
-            builder.append("{");
-            printListNode(objectNode.getProperties(), builder);
-            builder.append("}");
-        }
+        printKey(objectNode, builder);
+        printValueAsObject(objectNode.getProperties(), builder);
+        printAttributes(objectNode, builder);
+    }
+
+    private void printValueAsObject(List<Node> properties, StringBuilder builder) {
+        builder.append("{");
+        printListNode(properties, builder);
+        builder.append("}");
     }
 
     private void printArrayNode(ArrayNode arrayNode, StringBuilder builder) {
-        if (arrayNode.hasName()) {
-            printName(arrayNode.getName(), builder);
-            builder.append("[");
-            printListNode(arrayNode.getItems(), builder);
-            builder.append("]");
-            if (hasAttributes(arrayNode)) {
-                printAttributes(arrayNode, builder);
+        printKey(arrayNode, builder);
+        builder.append("[");
+        printArrayItems(arrayNode.getItems(), builder);
+        builder.append("]");
+        printAttributes(arrayNode, builder);
+    }
+
+    private void printKey(Node node, StringBuilder builder) {
+        if (node.hasName()) {
+            printName(node.getName(), builder);
+        }
+    }
+
+    private void printArrayItems(List<Node> nodes, StringBuilder builder) {
+        for (int i = 0; i < nodes.size(); i++) {
+            Node node = nodes.get(i);
+            if (node instanceof ObjectNode objectNode && node.hasName()) {
+                builder.append("{");
+                printObjectNode(objectNode, builder);
+                builder.append("}");
+            } else {
+                printValue(node, builder);
             }
-        } else {
-            builder.append("[");
-            printListNode(arrayNode.getItems(), builder);
-            builder.append("]");
+            if (needAddDelimiter(i, nodes.size())) {
+                builder.append(", ");
+            }
         }
     }
 
