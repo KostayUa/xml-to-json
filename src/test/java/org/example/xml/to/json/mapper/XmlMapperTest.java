@@ -116,7 +116,7 @@ public class XmlMapperTest {
             public void objectType1() {
                 String xml = """
                       <company>
-                           <name>value1</name>
+                        <name>value1</name>
                       </company>
                     """;
                 Node expected = new ObjectNode(
@@ -131,8 +131,8 @@ public class XmlMapperTest {
             public void objectType2() {
                 String xml = """
                       <company>
-                           <name>value1</name>
-                           <lastName>value2</lastName>
+                        <name>value1</name>
+                        <lastName>value2</lastName>
                       </company>
                     """;
                 Node expected = new ObjectNode(
@@ -154,7 +154,7 @@ public class XmlMapperTest {
             public void objectType1() {
                 String xml = """
                       <company attribute_name="attribute_value">
-                           <name>value1</name>
+                        <name>value1</name>
                       </company>
                     """;
                 Node expected = new ObjectNode(
@@ -170,8 +170,8 @@ public class XmlMapperTest {
             public void objectType2() {
                 String xml = """
                       <company attribute_name="attribute_value">
-                           <name>value1</name>
-                           <lastName>value2</lastName>
+                        <name>value1</name>
+                        <lastName>value2</lastName>
                       </company>
                     """;
                 Node expected = new ObjectNode(
@@ -198,9 +198,9 @@ public class XmlMapperTest {
             public void unExpectedNodeType() {
                 String xml = """
                       <phones>
-                           <phone>value1</phone>
-                           <phone>value2</phone>
-                           <name>value3</name>
+                        <phone>value1</phone>
+                        <phone>value2</phone>
+                        <name>value3</name>
                       </phones>
                     """;
                 assertThrows(UnExpectedListNameNodeException.class, () -> xmlMapper.parse(xml));
@@ -214,8 +214,8 @@ public class XmlMapperTest {
             public void arrayType() {
                 String xml = """
                       <phones>
-                           <phone>value1</phone>
-                           <phone>value2</phone>
+                        <phone>value1</phone>
+                        <phone>value2</phone>
                       </phones>
                     """;
                 Node expected = new ArrayNode(
@@ -232,14 +232,14 @@ public class XmlMapperTest {
             @Test
             public void arrayTypeWithNestedObject() {
                 String xml = """
-                         <productLines>
-                                    <productLine>
-                                        <code>123</code>
-                                    </productLine>
-                                    <productLine>
-                                        <code>456</code>
-                                    </productLine>
-                         </productLines>
+                      <productLines>
+                        <productLine>
+                          <code>123</code>
+                        </productLine>
+                        <productLine>
+                          <code>456</code>
+                        </productLine>
+                      </productLines>
                     """;
                 Node expected = new ArrayNode(
                     "productLines",
@@ -266,8 +266,8 @@ public class XmlMapperTest {
             public void arrayElement() {
                 String xml = """
                       <phones attribute_name="attribute_value">
-                           <phone>value1</phone>
-                           <phone>value2</phone>
+                        <phone>value1</phone>
+                        <phone>value2</phone>
                       </phones>
                     """;
                 Node expected = new ArrayNode(
