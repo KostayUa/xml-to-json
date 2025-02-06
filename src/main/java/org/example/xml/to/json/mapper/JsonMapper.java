@@ -28,11 +28,13 @@ public class JsonMapper {
         JsonNodeType nodeType = jsonNode.getNodeType();
         return switch (nodeType) {
             case NULL -> name == null ? new NullNode() : new NullNode(name);
-            case BOOLEAN ->
-                name == null ? new BooleanNode(jsonNode.asBoolean()) : new BooleanNode(name, jsonNode.asBoolean());
-            case STRING ->
-                name == null ? new StringNode(jsonNode.textValue()) : new StringNode(name, jsonNode.textValue());
-            case NUMBER -> null == name
+            case BOOLEAN -> name == null
+                ? new BooleanNode(jsonNode.asBoolean())
+                : new BooleanNode(name, jsonNode.asBoolean());
+            case STRING -> name == null
+                ? new StringNode(jsonNode.textValue())
+                : new StringNode(name, jsonNode.textValue());
+            case NUMBER -> name == null
                 ? new NumberNode(new BigDecimal(jsonNode.asText()))
                 : new NumberNode(name, new BigDecimal(jsonNode.asText()));
             case OBJECT -> parseObjectNode(name, jsonNode);
