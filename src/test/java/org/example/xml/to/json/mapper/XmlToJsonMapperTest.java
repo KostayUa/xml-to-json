@@ -21,14 +21,14 @@ public class XmlToJsonMapperTest {
     private static Stream<Arguments> sourceForXmlTransformationToJson() {
         return Stream.of(
             Arguments.of("""
-                    <company>
+                      <company>
                         <name>Delivery of future</name>
                         <address>Soborna</address>
                         <cityStZip>Ir41400</cityStZip>
                         <phone>(093) 439-0011</phone>
                         <fax>(050) 332-8734</fax>
                         <website>https://delivery.com</website>
-                    </company>
+                      </company>
                     """,
                 "{" +
                     "\"company\": {" +
@@ -43,22 +43,22 @@ public class XmlToJsonMapperTest {
             ),
             Arguments.of(
                 """
-                    <productLines>
-                            <productLine>
-                                <code>123</code>
-                                <description>ProductABC</description>
-                                <quantity unit="pcs">50</quantity>
-                                <price>10.0</price>
-                                <total>500.0</total>
-                            </productLine>
-                            <productLine>
-                                <code>456</code>
-                                <description>Product</description>
-                                <quantity unit="pcs">100</quantity>
-                                <price>15.0</price>
-                                <total>200.0</total>
-                            </productLine>
-                    </productLines>
+                      <productLines>
+                        <productLine>
+                          <code>123</code>
+                          <description>ProductABC</description>
+                          <quantity unit="pcs">50</quantity>
+                          <price>10.0</price>
+                          <total>500.0</total>
+                        </productLine>
+                        <productLine>
+                          <code>456</code>
+                          <description>Product</description>
+                          <quantity unit="pcs">100</quantity>
+                          <price>15.0</price>
+                          <total>200.0</total>
+                        </productLine>
+                      </productLines>
                     """,
                 "{" +
                     "\"productLines\": [" +
