@@ -22,22 +22,22 @@ public class XmlToXmlMapperTest {
         return Stream.of(
             Arguments.of(
                 """
-                    <productLines>
-                            <productLine>
-                                <code>123</code>
-                                <description>ProductABC</description>
-                                <quantity unit="pcs">50</quantity>
-                                <price>10.0</price>
-                                <total>500.0</total>
-                            </productLine>
-                            <productLine>
-                                <code>456</code>
-                                <description>Product</description>
-                                <quantity unit="pcs">100</quantity>
-                                <price>15.0</price>
-                                <total>200.0</total>
-                            </productLine>
-                    </productLines>
+                      <productLines>
+                        <productLine>
+                          <code>123</code>
+                          <description>ProductABC</description>
+                          <quantity unit="pcs">50</quantity>
+                          <price>10.0</price>
+                          <total>500.0</total>
+                        </productLine>
+                        <productLine>
+                          <code>456</code>
+                          <description>Product</description>
+                          <quantity unit="pcs">100</quantity>
+                          <price>15.0</price>
+                          <total>200.0</total>
+                        </productLine>
+                      </productLines>
                     """,
                 "<productLines>" +
                     "<productLine>" +
